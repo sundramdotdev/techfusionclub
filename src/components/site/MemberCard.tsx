@@ -1,11 +1,15 @@
-import { useEffect, useId, useState } from "react";
-import { Github, Instagram, Linkedin, Link2, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import {
+  Github,
+  Instagram,
+  Linkedin,
+  Link2,
+  ArrowUpRight,
+  ChevronUp,
+} from "lucide-react";
 import type { Member } from "@/data/members";
-import { club } from "@/data/club";
 import { cn } from "@/lib/utils";
 import { useCursorGlow } from "@/lib/motion";
-import { useTheme } from "@/lib/theme";
-
 
 const socialIcons = {
   linkedin: Linkedin,
@@ -21,11 +25,6 @@ const socialLabels = {
   portfolio: "Portfolio",
 } as const;
 
-/**
- * Flip-card member badge. Front shows the photo, name and designation;
- * activating the card flips it to a futuristic access-badge back face.
- * Works with click, tap, Enter and Space — never hover-only.
- */
 export function MemberCard({
   member,
   size = "md",
@@ -35,158 +34,225 @@ export function MemberCard({
   size?: "lg" | "md" | "sm";
   index?: number;
 }) {
-  const { theme } = useTheme();
-  const isLight = theme === "light";
-  const logoSrc = isLight ? "/images/branding/techfusionlogolight-sm.webp" : "/images/branding/techfusionlogo-sm.webp";
-
-  const [flipped, setFlipped] = useState(false);
-  const backId = useId();
-
-  useEffect(() => {
-    if (!flipped) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setFlipped(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [flipped]);
+  const [expanded, setExpanded] = useState(false);
 
   const heights = {
-    lg: "h-[30rem] sm:h-[34rem]",
-    md: "h-[26rem] sm:h-[28rem]",
-    sm: "h-[22rem]",
+    lg: "min-h-[30rem]",
+    md: "min-h-[26rem]",
+    sm: "min-h-[22rem]",
   } as const;
 
   const glowRef = useCursorGlow<HTMLDivElement>();
 
   return (
-    <div
+    <article
       ref={glowRef}
-      className={cn("group cursor-glow rounded-3xl", heights[size])}
-      style={{ perspective: "1400px" }}
+      onClick={() => setExpanded((value) => !value)}
+      className={cn(
+        "group relative cursor-pointer overflow-hidden rounded-3xl",
+        "border border-border/70 bg-surface/90",
+        "transition-all duration-500 ease-out",
+        "hover:-translate-y-2 hover:scale-[1.02]",
+        "hover:border-primary/40 hover:shadow-2xl",
+        heights[size]
+      )}
     >
+      {/* Subtle hover glow */}
+      <div
+        className="
+          pointer-events-none absolute -inset-20
+          bg-primary/10 blur-3xl
+          opacity-0 transition-opacity duration-500
+          group-hover:opacity-100
+        "
+      />
 
-      <button
-        type="button"
-        onClick={() => setFlipped((v) => !v)}
-        aria-pressed={flipped}
-        aria-expanded={flipped}
-        aria-controls={backId}
-        aria-label={`${member.name}, ${member.designation}. ${flipped ? "Hide" : "Show"} member ID details`}
-        className="relative block size-full rounded-3xl text-left outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-      >
+      {/* Profile Image */}
+      <div className="relative h-[15rem] overflow-hidden sm:h-[17rem]">
+        <img
+          src={member.photo}
+          alt={`${member.name}, ${member.designation}`}
+          loading={index < 3 ? "eager" : "lazy"}
+          decoding="async"
+          className="
+            size-full object-cover
+            transition-transform duration-700 ease-out
+            group-hover:scale-110
+          "
+        />
+
+        {/* Image gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent" />
+
+        {/* Profile arrow */}
         <div
-          className="relative size-full transition-transform duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            transformStyle: "preserve-3d",
-            transform: flipped ? "rotateY(180deg)" : undefined,
-          }}
+          className="
+            absolute right-4 top-4
+            grid size-10 place-items-center
+            rounded-full border border-white/20
+            bg-black/25 text-white backdrop-blur-md
+            transition-all duration-300
+            group-hover:scale-110
+            group-hover:bg-primary
+          "
         >
-          {/* ---------- Front ---------- */}
-          <div className="flip-face glass overflow-hidden rounded-3xl">
-            <img
-              src={member.photo}
-              alt={`${member.name}, ${member.designation}`}
-              loading={index < 3 ? "eager" : "lazy"}
-              decoding="async"
-              className="size-full object-cover opacity-90 saturate-[0.7] transition-all duration-700 group-hover:scale-[1.04] group-hover:opacity-100 group-hover:saturate-100"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6">
-              <p className="eyebrow">{member.designation}</p>
-              <h3 className="mt-2 font-display text-xl font-bold leading-tight sm:text-2xl">
-                {member.name}
-              </h3>
-              <p className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                <span className="inline-block size-1.5 rounded-full bg-primary animate-pulse-dot" />
-                Tap to reveal ID
-              </p>
-            </div>
-          </div>
+          {expanded ? (
+            <ChevronUp className="size-5" />
+          ) : (
+            <ArrowUpRight className="size-5" />
+          )}
+        </div>
+      </div>
 
-          {/* ---------- Back: access badge ---------- */}
+      {/* Card Content */}
+      <div className="relative z-10 p-5 sm:p-6">
+        <p className="eyebrow">{member.designation}</p>
+
+        <h3
+          className="
+            mt-2 font-display text-xl font-bold
+            leading-tight sm:text-2xl
+          "
+        >
+          {member.name}
+        </h3>
+
+        <p className="mt-2 text-sm text-muted-foreground">
+          {member.domain}
+        </p>
+
+        {/* Closed state */}
+        {!expanded && (
           <div
-            id={backId}
-            className="flip-face glass-strong overflow-hidden rounded-3xl border-primary/40 p-5 sm:p-6"
-            style={{ transform: "rotateY(180deg)" }}
+            className="
+              mt-5 flex items-center gap-2
+              text-xs font-medium text-primary
+            "
           >
-            <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-40">
-              <div className="h-16 w-full bg-gradient-to-b from-transparent via-primary/25 to-transparent blur-md animate-scan" />
-            </div>
+            <span>View profile</span>
 
-            <div className="relative flex size-full flex-col">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-glow">
-                    {club.name}
-                  </p>
-                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                    Member access badge
-                  </p>
-                </div>
-                <div className="grid size-10 shrink-0 place-items-center rounded-lg border border-primary/40 bg-primary/10 p-1.5 overflow-hidden">
-                  <img src={logoSrc} alt="TFC Logo" className="size-full object-contain" />
-                </div>
-              </div>
+            <ArrowUpRight
+              className="
+                size-3.5
+                transition-transform duration-300
+                group-hover:translate-x-1
+                group-hover:-translate-y-1
+              "
+            />
+          </div>
+        )}
 
-              <div className="divider-glow my-4" />
-
-              <h3 className="font-display text-lg font-bold leading-tight sm:text-xl">
-                {member.fullName}
-              </h3>
-              <p className="mt-1 text-sm font-medium text-primary-glow">{member.designation}</p>
-
-              <dl className="mt-4 grid gap-3 text-xs">
-                <div>
-                  <dt className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
-                    Branch
-                  </dt>
-                  <dd className="mt-1 font-medium">{member.branch}</dd>
-                </div>
-              </dl>
-
-              <p className="mt-4 border-l-2 border-primary/40 pl-3 text-xs leading-relaxed text-muted-foreground">
+        {/* Expanded profile */}
+        <div
+          className={cn(
+            "grid transition-all duration-500 ease-out",
+            expanded
+              ? "mt-5 grid-rows-[1fr] opacity-100"
+              : "grid-rows-[0fr] opacity-0"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="border-t border-border/70 pt-5">
+              
+              {/* Bio */}
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 {member.bio}
               </p>
 
-              <div className="mt-auto pt-5">
-                <div className="flex flex-wrap items-center gap-2">
-                  {Object.keys(socialIcons).map((key) => {
-                    const Icon = socialIcons[key as keyof typeof socialIcons];
-                    const href = member.socials?.[key as keyof typeof member.socials] || "#";
-                    
-                    return (
-                      <a
-                        key={key}
-                        href={href}
-                        target={href === "#" ? undefined : "_blank"}
-                        rel="noreferrer noopener"
-                        tabIndex={flipped ? 0 : -1}
-                        aria-label={`${member.name} on ${socialLabels[key as keyof typeof socialLabels]}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (href === "#") e.preventDefault();
-                        }}
-                        className={cn(
-                          "grid size-9 place-items-center rounded-full border transition-colors",
-                          href !== "#" 
-                            ? "border-border bg-surface text-muted-foreground hover:border-primary/50 hover:text-primary-glow"
-                            : "border-transparent bg-surface/50 text-muted-foreground/30 cursor-not-allowed"
-                        )}
-                      >
-                        <Icon className="size-4" />
-                      </a>
-                    );
-                  })}
-                  <span className="ml-auto inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                    <RotateCcw className="size-3" /> Flip back
+              {/* Branch */}
+              {member.branch && (
+                <div className="mt-4">
+                  <span
+                    className="
+                      inline-flex rounded-full
+                      border border-border
+                      bg-background/60
+                      px-3 py-1.5
+                      text-[10px] font-medium
+                      uppercase tracking-wider
+                      text-muted-foreground
+                    "
+                  >
+                    {member.branch}
                   </span>
                 </div>
+              )}
+
+              {/* Social Links */}
+              <div className="mt-5 flex items-center gap-2">
+                {Object.keys(socialIcons).map((key) => {
+                  const Icon =
+                    socialIcons[key as keyof typeof socialIcons];
+
+                  const href =
+                    member.socials?.[
+                      key as keyof typeof member.socials
+                    ] || "#";
+
+                  return (
+                    <a
+                      key={key}
+                      href={href}
+                      target={href === "#" ? undefined : "_blank"}
+                      rel="noreferrer noopener"
+                      aria-label={`${member.name} on ${
+                        socialLabels[key as keyof typeof socialLabels]
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        if (href === "#") {
+                          e.preventDefault();
+                        }
+                      }}
+                      className={cn(
+                        `
+                          grid size-9 place-items-center
+                          rounded-full border
+                          transition-all duration-300
+                        `,
+                        href !== "#"
+                          ? `
+                            border-border
+                            bg-background/70
+                            text-muted-foreground
+                            hover:scale-110
+                            hover:border-primary
+                            hover:bg-primary
+                            hover:text-primary-foreground
+                          `
+                          : `
+                            cursor-not-allowed
+                            border-transparent
+                            bg-background/40
+                            text-muted-foreground/30
+                          `
+                      )}
+                    >
+                      <Icon className="size-4" />
+                    </a>
+                  );
+                })}
+
+                <span className="ml-auto text-xs text-muted-foreground">
+                  Click to collapse
+                </span>
               </div>
             </div>
           </div>
         </div>
-      </button>
-    </div>
+      </div>
+
+      {/* Bottom accent */}
+      <div
+        className="
+          absolute bottom-0 left-0
+          h-[2px] w-0
+          bg-primary
+          transition-all duration-500
+          group-hover:w-full
+        "
+      />
+    </article>
   );
 }
