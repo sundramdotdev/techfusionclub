@@ -98,9 +98,9 @@ const tiers: {
 function Team() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      /* =========================
+      /* =========================================
          HERO LOAD ANIMATION
-         ========================= */
+      ========================================= */
 
       const intro = gsap.timeline({
         defaults: {
@@ -110,43 +110,43 @@ function Team() {
 
       intro
         .from(".hero-eyebrow", {
-          x: -60,
+          x: -50,
           opacity: 0,
           duration: 0.7,
         })
         .from(
           ".hero-line",
           {
-            x: -120,
+            x: -90,
             opacity: 0,
-            duration: 1,
-            stagger: 0.15,
+            duration: 0.9,
+            stagger: 0.12,
           },
           "-=0.35",
         )
         .from(
           ".hero-description",
           {
-            x: -70,
+            x: -50,
             opacity: 0,
-            duration: 0.8,
+            duration: 0.7,
           },
-          "-=0.55",
+          "-=0.5",
         )
         .from(
           ".hero-middle-image",
           {
             opacity: 0,
-            scale: 0.85,
-            duration: 1.2,
+            scale: 0.9,
+            duration: 1,
             ease: "power3.out",
           },
-          "-=0.7",
+          "-=0.6",
         );
 
-      /* =========================
-         SCROLL ANIMATION
-         ========================= */
+      /* =========================================
+         HERO SCROLL ANIMATION
+      ========================================= */
 
       const scrollTimeline = gsap.timeline({
         scrollTrigger: {
@@ -160,40 +160,36 @@ function Team() {
         },
       });
 
-      /* Text stretches */
       scrollTimeline.to(".hero-content", {
-        scaleX: 1.12,
+        scaleX: 1.08,
         duration: 0.3,
         transformOrigin: "left center",
         ease: "power2.out",
       });
 
-      /* Middle image slightly moves */
       scrollTimeline.to(
         ".hero-middle-image",
         {
-          scale: 1.08,
+          scale: 1.05,
           duration: 0.5,
           ease: "power2.out",
         },
         0,
       );
 
-      /* Text zooms out */
       scrollTimeline.to(".hero-content", {
-        scale: 0.58,
-        y: -100,
+        scale: 0.6,
+        y: -90,
         opacity: 0,
         duration: 0.7,
         ease: "power3.inOut",
       });
 
-      /* Image fades away */
       scrollTimeline.to(
         ".hero-middle-image",
         {
-          scale: 0.9,
-          y: -50,
+          scale: 0.92,
+          y: -45,
           opacity: 0,
           duration: 0.7,
           ease: "power3.inOut",
@@ -201,31 +197,75 @@ function Team() {
         "<",
       );
 
-      /* Background */
       scrollTimeline.to(
         ".hero-background",
         {
-          scale: 1.08,
-          opacity: 0.5,
+          scale: 1.06,
+          opacity: 0.45,
           duration: 1,
           ease: "none",
         },
         0,
       );
 
-      /* Team section */
+      /* =========================================
+         TEAM SECTION REVEAL
+      ========================================= */
+
       gsap.from(".team-sections", {
-        y: 100,
+        y: 70,
         opacity: 0,
-        scale: 0.97,
+        scale: 0.985,
         duration: 1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: ".team-sections",
-          start: "top 85%",
-          end: "top 45%",
+          start: "top 88%",
+          end: "top 55%",
           scrub: 1,
         },
+      });
+
+      /* =========================================
+         EACH TEAM SECTION
+      ========================================= */
+
+      gsap.utils.toArray<HTMLElement>(".team-tier-section").forEach(
+        (section) => {
+          gsap.from(section, {
+            y: 45,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 88%",
+              toggleActions: "play none none reverse",
+            },
+          });
+        },
+      );
+
+      /* =========================================
+         CARD REVEAL
+      ========================================= */
+
+      gsap.utils.toArray<HTMLElement>(".member-grid").forEach((grid) => {
+        const cards = grid.querySelectorAll(".member-card-item");
+
+        gsap.from(cards, {
+          y: 35,
+          opacity: 0,
+          scale: 0.98,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: grid,
+            start: "top 88%",
+            toggleActions: "play none none reverse",
+          },
+        });
       });
     });
 
@@ -236,22 +276,20 @@ function Team() {
     <>
       {/* =====================================================
           HERO SECTION
-          ===================================================== */}
+      ===================================================== */}
 
       <section
         className="
           hero-section
           relative
-          min-h-screen
-          overflow-hidden
           flex
+          min-h-screen
           items-center
+          overflow-hidden
           pb-8
         "
       >
-        {/* =========================
-            BACKGROUND
-            ========================= */}
+        {/* HERO BACKGROUND */}
 
         <div
           className="
@@ -260,44 +298,44 @@ function Team() {
             absolute
             inset-0
             -z-10
-            opacity-40
+            opacity-35
           "
           aria-hidden="true"
         >
-          {/* Grid */}
+          {/* Subtle grid */}
           <div
             className="
               absolute
               inset-0
-              bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)]
+              bg-[linear-gradient(to_right,rgba(0,0,0,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.025)_1px,transparent_1px)]
               bg-[size:72px_72px]
             "
           />
 
-          {/* Red glow */}
+          {/* Soft red glow */}
           <div
             className="
               absolute
-              left-[-10%]
+              left-[-12%]
               top-[20%]
               h-[420px]
               w-[420px]
               rounded-full
-              bg-red-100/40
+              bg-red-100/30
               blur-3xl
             "
           />
 
-          {/* Blue glow */}
+          {/* Very subtle neutral glow */}
           <div
             className="
               absolute
-              right-[-8%]
-              top-[15%]
-              h-[500px]
-              w-[500px]
+              right-[-10%]
+              top-[12%]
+              h-[480px]
+              w-[480px]
               rounded-full
-              bg-blue-100/50
+              bg-slate-100/60
               blur-3xl
             "
           />
@@ -309,13 +347,12 @@ function Team() {
               relative
               flex
               min-h-[720px]
-              
-              
+              items-center
             "
           >
             {/* =================================================
-                LEFT SIDE TEXT
-                ================================================= */}
+                HERO TEXT
+            ================================================= */}
 
             <div
               className="
@@ -323,8 +360,9 @@ function Team() {
                 relative
                 z-20
                 max-w-4xl
-                pt-20
+                pt-8
                 lg:w-[62%]
+                lg:pt-0
               "
             >
               <p className="hero-eyebrow eyebrow">
@@ -372,8 +410,8 @@ function Team() {
             </div>
 
             {/* =================================================
-                ONLY MIDDLE IMAGE
-                ================================================= */}
+                ROTATING HERO IMAGE
+            ================================================= */}
 
             <div
               className="
@@ -393,17 +431,13 @@ function Team() {
               "
               aria-hidden="true"
             >
-              {/* 
-                This wrapper crops everything except
-                the center portion of HeroBackground.
-              */}
               <div
                 className="
                   absolute
                   inset-0
                   overflow-hidden
                   rounded-full
-                  opacity-[0.28]
+                  opacity-[0.24]
                   [clip-path:circle(34%_at_50%_50%)]
                 "
               >
@@ -428,7 +462,7 @@ function Team() {
 
       {/* =====================================================
           TEAM SECTIONS
-          ===================================================== */}
+      ===================================================== */}
 
       <div className="team-sections">
         {tiers.map(({ tier, size, cols }) => {
@@ -439,16 +473,47 @@ function Team() {
           return (
             <Section
               key={tier}
-              className="py-10 sm:py-12"
+              className="team-tier-section py-12 sm:py-16"
             >
-              <div className="flex flex-col gap-2 border-b border-border/70 pb-5">
-                <p className="font-display text-2xl font-bold text-foreground">
-                  {tierMeta[tier].label}
-                </p>
+              {/* Section heading */}
+              <div className="relative mb-9 overflow-hidden rounded-2xl border border-red-100/80 bg-white/70 px-5 py-5 shadow-sm backdrop-blur-sm sm:px-7">
+                <div
+                  className="
+                    absolute
+                    left-0
+                    top-0
+                    h-full
+                    w-1
+                    bg-primary
+                  "
+                />
 
-                <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                  {tierMeta[tier].description}
-                </p>
+                <div className="pl-2">
+                  <p
+                    className="
+                      font-display
+                      text-2xl
+                      font-bold
+                      tracking-tight
+                      text-foreground
+                      sm:text-3xl
+                    "
+                  >
+                    {tierMeta[tier].label}
+                  </p>
+
+                  <p
+                    className="
+                      mt-2
+                      max-w-2xl
+                      text-sm
+                      leading-relaxed
+                      text-muted-foreground
+                    "
+                  >
+                    {tierMeta[tier].description}
+                  </p>
+                </div>
               </div>
 
               {(() => {
@@ -491,19 +556,41 @@ function Team() {
                   );
 
                 return (
-                  <div className="mt-8 grid gap-12">
-                    {/* TFC */}
+                  <div className="grid gap-14">
+                    {/* =================================================
+                        TFC
+                    ================================================= */}
+
                     {tfcMembers.length > 0 && (
-                      <div className="space-y-5">
-                        <h3 className="font-display text-lg font-semibold tracking-wide text-primary">
-                          Tech Fusion Club
-                        </h3>
+                      <div className="space-y-7">
+                        <div className="flex items-center gap-4">
+                          <div className="h-px flex-1 bg-red-100" />
+
+                          <h3
+                            className="
+                              whitespace-nowrap
+                              font-display
+                              text-base
+                              font-semibold
+                              tracking-wide
+                              text-primary
+                              sm:text-lg
+                            "
+                          >
+                            Tech Fusion Club
+                          </h3>
+
+                          <div className="h-px flex-1 bg-red-100" />
+                        </div>
 
                         <ul
-                          className={`grid gap-5 ${cols}`}
+                          className={`member-grid grid gap-6 ${cols}`}
                         >
                           {tfcMembers.map((m, i) => (
-                            <li key={m.id}>
+                            <li
+                              key={m.id}
+                              className="member-card-item min-w-0"
+                            >
                               <MemberCard
                                 member={m}
                                 size={size}
@@ -515,18 +602,40 @@ function Team() {
                       </div>
                     )}
 
-                    {/* ESPORTS */}
+                    {/* =================================================
+                        ESPORTS
+                    ================================================= */}
+
                     {esportsMembers.length > 0 && (
-                      <div className="space-y-5">
-                        <h3 className="font-display text-lg font-semibold tracking-wide text-primary">
-                          TFC Esports Club
-                        </h3>
+                      <div className="space-y-7">
+                        <div className="flex items-center gap-4">
+                          <div className="h-px flex-1 bg-red-100" />
+
+                          <h3
+                            className="
+                              whitespace-nowrap
+                              font-display
+                              text-base
+                              font-semibold
+                              tracking-wide
+                              text-primary
+                              sm:text-lg
+                            "
+                          >
+                            TFC Esports Club
+                          </h3>
+
+                          <div className="h-px flex-1 bg-red-100" />
+                        </div>
 
                         <ul
-                          className={`grid gap-5 ${cols}`}
+                          className={`member-grid grid gap-6 ${cols}`}
                         >
                           {esportsMembers.map((m, i) => (
-                            <li key={m.id}>
+                            <li
+                              key={m.id}
+                              className="member-card-item min-w-0"
+                            >
                               <MemberCard
                                 member={m}
                                 size={size}
@@ -547,7 +656,7 @@ function Team() {
 
       {/* =====================================================
           CTA
-          ===================================================== */}
+      ===================================================== */}
 
       <CTABanner
         eyebrow="Join the roster"
