@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, reopened]
 
+permissions:
+  pull-requests: write
+  issues: write
+
 jobs:
   greet-and-warn:
     runs-on: ubuntu-latest
