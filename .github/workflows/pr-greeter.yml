@@ -1,0 +1,38 @@
+name: PR Greeter & AI Warning
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  greet-and-warn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add PR Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commentBody = `
+            👋 **Welcome to the Tech Fusion Club repository, @${context.payload.pull_request.user.login}!** 🚀
+
+            Thank you for your pull request! Before we review it, please double-check the following to save everyone time:
+
+            🤖 **Using AI (Copilot, Cursor, ChatGPT)?**
+            - **Do NOT** let AI blindly rewrite entire files for a small 1-line change.
+            - **Do NOT** add heavy external libraries (like \`gsap\`, \`three.js\`) unless explicitly discussed in an issue. We prefer native CSS and lightweight solutions!
+            - Check your commit history: Did you accidentally commit \`.vercel\`, \`node_modules\`, or \`package-lock.json\` conflicts?
+
+            ✅ **Next Steps:**
+            1. Our CI pipeline is running tests (Linting, TypeScript, Build) on your code right now. 
+            2. If any check fails ❌, please fix the errors and push your changes to this same branch.
+            3. A maintainer will review your PR soon.
+
+            Happy coding! 💻✨
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            });
