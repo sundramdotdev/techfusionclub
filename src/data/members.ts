@@ -59,7 +59,7 @@ export const members: Member[] = [
     domain: "University Club Coordinator",
     branch: "IMCE",
     bio: "Chief Faculty Mentor guiding university student technical societies, annual tech fests, inter-departmental logistics, and leadership development.",
-    photo: "https://srmu.ac.in/assets/dr-veena-singh-CKCbgSAF.webp",
+    photo: "/images/members/faculty-coordinator.jpg",
     accessCode: "TF-FAC-0001",
     socials: { linkedin: "https://www.linkedin.com/in/prof-dr-veena-singh-26a48b196/" },
   },
