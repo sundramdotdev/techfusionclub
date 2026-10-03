@@ -1,26 +1,43 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, Auth } from "firebase/auth";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 
-const firebaseConfig = {
-  apiKey: import.meta.env["VITE_FIREBASE_API_KEY"],
-  authDomain: import.meta.env["VITE_FIREBASE_AUTH_DOMAIN"],
-  projectId: import.meta.env["VITE_FIREBASE_PROJECT_ID"],
-  storageBucket: import.meta.env["VITE_FIREBASE_STORAGE_BUCKET"],
-  messagingSenderId: import.meta.env["VITE_FIREBASE_MESSAGING_SENDER_ID"],
-  appId: import.meta.env["VITE_FIREBASE_APP_ID"],
+const getEnv = (key: string) => {
+  if (typeof process !== "undefined" && process.env && process.env[key]) {
+    return process.env[key];
+  }
+  return import.meta.env[key] || "";
 };
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const firebaseConfig = {
+  apiKey: getEnv("VITE_FIREBASE_API_KEY"),
+  authDomain: getEnv("VITE_FIREBASE_AUTH_DOMAIN"),
+  projectId: getEnv("VITE_FIREBASE_PROJECT_ID"),
+  storageBucket: getEnv("VITE_FIREBASE_STORAGE_BUCKET"),
+  messagingSenderId: getEnv("VITE_FIREBASE_MESSAGING_SENDER_ID"),
+  appId: getEnv("VITE_FIREBASE_APP_ID"),
+};
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-export const googleProvider = new GoogleAuthProvider();
+const isBrowser = typeof window !== "undefined";
+
+let app: FirebaseApp | undefined;
+export let auth: Auth;
+export let db: Firestore;
+export let storage: FirebaseStorage;
+export let googleProvider: GoogleAuthProvider;
+
+if (isBrowser) {
+  // Initialize Firebase ONLY on the client to prevent SSR serverless function timeouts and crashes
+  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
+  googleProvider = new GoogleAuthProvider();
+}
 
 export const signInWithGoogle = async () => {
+  if (!isBrowser) return null;
   try {
     const result = await signInWithPopup(auth, googleProvider);
     return result.user;
@@ -31,6 +48,7 @@ export const signInWithGoogle = async () => {
 };
 
 export const logout = async () => {
+  if (!isBrowser) return;
   try {
     await signOut(auth);
   } catch (error) {

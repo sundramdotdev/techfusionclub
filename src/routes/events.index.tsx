@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { eventCategories, type EventCategory } from "@/data/events";
 import { getEvents } from "@/lib/db";
 import { EventCard, FilterPill } from "@/components/site/EventCard";
@@ -39,20 +39,22 @@ export const Route = createFileRoute("/events/")({
     ],
     links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/events" }],
   }),
-  loader: async () => {
-    const fetchedEvents = await getEvents();
-    return { events: fetchedEvents };
-  },
   component: Events,
 });
 
 const upcomingYears = [2027];
 
 function Events() {
-  const { events } = Route.useLoaderData();
+  const [events, setEvents] = useState<ClubEvent[]>([]);
   const [year, setYear] = useState<number | "all">("all");
   const [category, setCategory] = useState<EventCategory | "all">("all");
   const [selectedEvent, setSelectedEvent] = useState<ClubEvent | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      getEvents().then((data) => setEvents(data));
+    }
+  }, []);
 
   const eventYears = useMemo(
     () => Array.from(new Set(events.map((e) => e.year))).sort((a, b) => b - a),
