@@ -1,19 +1,41 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, CalendarDays, MapPin, Quote, Sparkles, Zap, Shield, Cpu, Code2, Terminal, ExternalLink } from "lucide-react";
-import { club, domains, stats } from "@/data/club";
-import { featuredEvent, formatEventDate } from "@/data/events";
-import { galleryPhotos } from "@/data/gallery";
+import { useState, useEffect } from "react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CalendarDays,
+  MapPin,
+  Sparkles,
+  Zap,
+  Shield,
+  Cpu,
+  Code2,
+  Terminal,
+  ExternalLink,
+  Users,
+  Trophy,
+  GraduationCap,
+  Lightbulb,
+} from "lucide-react";
+import { club, domains, stats, values, timeline } from "@/data/club";
+import { formatEventDate } from "@/data/events";
+import type { ClubEvent } from "@/data/events";
+import type { GalleryPhoto } from "@/data/gallery";
+import { getEvents, getGalleryPhotos } from "@/lib/db";
 import { Reveal } from "@/components/site/Reveal";
 import { Section, SectionHeading } from "@/components/site/Section";
 import { StatCounter } from "@/components/site/StatCounter";
 import { CTABanner } from "@/components/site/CTABanner";
 import { GlowCard } from "@/components/site/GlowCard";
-import { ProjectsShowcase } from "@/components/site/ProjectsShowcase";
-import { ClubRoadmap } from "@/components/site/ClubRoadmap";
 import { PillarsSection } from "@/components/site/PillarsSection";
-import { PartnersSection } from "@/components/site/PartnersSection";
+import { ClubRoadmap } from "@/components/site/ClubRoadmap";
+import { MarqueeStrip } from "@/components/site/MarqueeStrip";
+import { FAQSection } from "@/components/site/FAQSection";
+import { TestimonialsSection } from "@/components/site/TestimonialsSection";
+import { UpcomingEventsGrid } from "@/components/site/UpcomingEventsGrid";
+import { VideoHero } from "@/components/site/VideoHero";
+import { DomainShowcase } from "@/components/site/DomainShowcase";
 
-import { HeroBackground } from "@/components/site/HeroBackground";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,7 +48,8 @@ export const Route = createFileRoute("/")({
       },
       {
         name: "keywords",
-        content: "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, engineering club, tech community",
+        content:
+          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, engineering club, tech community",
       },
       { property: "og:title", content: "Tech Fusion Club (TFC SRMU) | Viveka Fest & Coding" },
       {
@@ -48,76 +71,173 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const previewPhotos = galleryPhotos.slice(0, 5);
+  const [previewPhotos, setPreviewPhotos] = useState<GalleryPhoto[]>([]);
+  const [featuredEvent, setFeaturedEvent] = useState<ClubEvent | null>(null);
+
+  useEffect(() => {
+    getGalleryPhotos().then(data => setPreviewPhotos(data.slice(0, 6)));
+    getEvents().then(events => {
+      // Pick the first upcoming event, or the first event overall
+      const upcoming = events.find(e => e.status === "upcoming");
+      setFeaturedEvent(upcoming || events[0] || null);
+    });
+  }, []);
 
   return (
     <>
-      {/* ---------------- Centered Ultra-Wide Minimalist Hero ---------------- */}
-      <section className="hero-gradient relative overflow-hidden px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 text-center">
-        {/* Dynamic Parallax Tech Elements & Mouse Spotlight Glow */}
-        <HeroBackground />
-        <div className="circuit-lines pointer-events-none absolute inset-0 opacity-80 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_0%,#000_40%,transparent_100%)]" />
-        <div className="grid-lines pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_40%,transparent_100%)]" />
+      {/* ═══════════════════ 1. SRMU-STYLE VIDEO HERO ═══════════════════ */}
+      <VideoHero>
+        <div className="py-8 lg:py-0">
+          {/* Eyebrow badge */}
+          <div className="animate-rise [animation-delay:0ms]">
+            <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs uppercase tracking-widest text-primary-glow border border-primary/30">
+              <Sparkles className="size-3.5" />
+              Est. {club.foundedYear} — {club.university}
+            </span>
+          </div>
 
-        <div className="relative mx-auto flex max-w-4xl flex-col items-center">
           {/* Giant Display Title */}
-          <h1 className="mt-8 text-balance font-display text-4xl font-bold leading-[1.05] tracking-tight animate-rise [animation-delay:80ms] sm:text-6xl lg:text-7xl">
-            Where ideas <span className="text-gradient">fuse</span> into technology.
+          <h1 className="mt-6 text-balance font-display text-4xl font-bold leading-[1.08] tracking-tight animate-rise [animation-delay:100ms] sm:text-5xl lg:text-6xl xl:text-7xl">
+            Where ideas{" "}
+            <span className="text-gradient">fuse</span>
+            <br className="hidden sm:block" /> into technology.
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground animate-rise [animation-delay:160ms] sm:text-xl">
-            {club.name} is the student-run technical collective at {club.university}. Six domains,
-            one calendar of workshops and hackathons, and a mentorship ladder running unbroken since {club.foundedYear}.
+          <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground animate-rise [animation-delay:200ms] sm:text-lg">
+            {club.name} is the student-run technical collective at SRMU. Six domains, one calendar
+            of workshops and hackathons, and a mentorship ladder running unbroken since {club.foundedYear}.
           </p>
 
-          {/* Call to Actions */}
-          <div className="mt-10 flex flex-col gap-4 animate-rise [animation-delay:240ms] sm:flex-row sm:items-center">
+          {/* CTAs */}
+          <div className="mt-8 flex flex-col gap-3 animate-rise [animation-delay:300ms] sm:flex-row sm:items-center">
             <Link
               to="/events"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.04] shadow-[0_0_25px_rgba(217,72,15,0.4)]"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.04] shadow-[0_0_25px_rgba(217,72,15,0.4)]"
             >
               Explore events
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link
-              to="/join"
-              className="glass pulse-glow inline-flex items-center justify-center rounded-full px-8 py-4 font-semibold text-foreground transition-colors hover:text-primary-glow"
-            >
-              Join the club
-            </Link>
-          </div>
 
-          {/* Domain Badges Strip */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-2 animate-rise [animation-delay:300ms]">
-            {[
-              { name: "Web Dev", icon: <Code2 className="size-3.5 text-primary-glow" /> },
-              { name: "AI / ML", icon: <Cpu className="size-3.5 text-accent" /> },
-              { name: "Cybersecurity", icon: <Shield className="size-3.5 text-emerald-400" /> },
-              { name: "App Dev", icon: <Sparkles className="size-3.5 text-cyan-400" /> },
-              { name: "Cloud & DevOps", icon: <Terminal className="size-3.5 text-amber-400" /> },
-              { name: "UI/UX Design", icon: <Zap className="size-3.5 text-purple-400" /> },
-            ].map((d) => (
-              <span
-                key={d.name}
-                className="glass inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-mono text-xs text-foreground/90 border border-border/80"
-              >
-                {d.icon}
-                {d.name}
-              </span>
-            ))}
           </div>
+        </div>
+      </VideoHero>
 
-          {/* Centered Stat Counters */}
-          <dl className="mt-16 grid w-full grid-cols-2 gap-8 border-t border-border/70 pt-12 sm:grid-cols-4">
+
+
+      {/* ═══════════════════ 3. MARQUEE TICKER ═══════════════════ */}
+      <div className="mt-12">
+        <MarqueeStrip
+          items={[
+            "Viveka 6.0 — Flagship Annual Tech Fest",
+            "320+ Active Members",
+            "6 Technical Domains",
+            "Weekly Build Nights",
+            "Smart India Hackathon (SIH) Prep",
+            "Open Source Contributions",
+            "1-on-1 Mentorship Program",
+            "Industry Guest Lectures",
+          ]}
+          speed={40}
+        />
+      </div>
+
+      {/* ═══════════════════ 4. STATS COUNTERS ═══════════════════ */}
+      <Section>
+        <Reveal>
+          <dl className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {stats.map((s) => (
-              <StatCounter key={s.label} value={s.value} prefix={s.prefix} suffix={s.suffix} label={s.label} />
+              <StatCounter
+                key={s.label}
+                value={s.value}
+                prefix={s.prefix}
+                suffix={s.suffix}
+                label={s.label}
+                className="text-center"
+              />
             ))}
           </dl>
-        </div>
-      </section>
+        </Reveal>
+      </Section>
 
-      {/* ---------------- NEW SECTION: The 4 Core Pillars of Tech Fusion ---------------- */}
+      {/* ═══════════════════ 5. FEATURED EVENT — Viveka Highlight ═══════════════════ */}
+      <Section>
+        <SectionHeading
+          eyebrow="Featured"
+          title="What's next on the calendar"
+          body="Our flagship fest and every workshop in between — all open to students from any department."
+          action={
+            <Link
+              to="/events"
+              className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
+            >
+              All events <ArrowRight className="size-4" />
+            </Link>
+          }
+        />
+
+        {featuredEvent && (
+          <Reveal className="glass-strong border-animated mt-12 grid overflow-hidden rounded-[2rem] lg:grid-cols-2">
+            <div className="relative min-h-[18rem] overflow-hidden">
+              <img
+                src={featuredEvent.cover}
+                alt={featuredEvent.title}
+                className="size-full object-cover opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/20 to-transparent lg:bg-gradient-to-r" />
+            </div>
+            <div className="p-8 sm:p-12">
+              <span className="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+                {featuredEvent.status === "upcoming" ? "Upcoming" : featuredEvent.category}
+              </span>
+              <h3 className="mt-5 text-balance font-display text-2xl font-bold leading-snug sm:text-3xl">
+                {featuredEvent.title}
+              </h3>
+              <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
+                {featuredEvent.summary}
+              </p>
+              <ul className="mt-7 space-y-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                <li className="flex items-center gap-2">
+                  <CalendarDays className="size-3.5 text-primary-glow" /> {formatEventDate(featuredEvent)}
+                </li>
+                <li className="flex items-center gap-2">
+                  <MapPin className="size-3.5 text-primary-glow" /> {featuredEvent.venue}
+                </li>
+              </ul>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Link
+                  to="/events"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03]"
+                >
+                  Event details <ArrowRight className="size-4" />
+                </Link>
+                <a
+                  href="https://viveka.techfusion.club"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
+                >
+                  Viveka 6.0 Site <ExternalLink className="size-3.5" />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        )}
+      </Section>
+
+      {/* ═══════════════════ 6. UPCOMING EVENTS GRID ═══════════════════ */}
+      <Section>
+        <SectionHeading
+          eyebrow="On the Horizon"
+          title="Upcoming events & competitions"
+          body="Hackathons, workshops, and tech-culture fests — all organized by students, for students."
+        />
+        <div className="mt-12">
+          <UpcomingEventsGrid />
+        </div>
+      </Section>
+
+      {/* ═══════════════════ 7. FOUR PILLARS ═══════════════════ */}
       <Section>
         <SectionHeading
           eyebrow="The Framework"
@@ -131,7 +251,7 @@ function Home() {
         </div>
       </Section>
 
-      {/* ---------------- Mission ---------------- */}
+      {/* ═══════════════════ 8. MISSION & VISION ═══════════════════ */}
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <Reveal>
@@ -154,125 +274,64 @@ function Home() {
         </div>
       </Section>
 
-      {/* ---------------- Featured Event ---------------- */}
+
+
+      {/* ═══════════════════ 10. CORE VALUES ═══════════════════ */}
       <Section>
         <SectionHeading
-          eyebrow="Featured"
-          title="What's next on the calendar"
-          body="Our flagship fest and every workshop in between — all open to students from any department."
-          action={
-            <Link
-              to="/events"
-              className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
-            >
-              All events <ArrowRight className="size-4" />
-            </Link>
-          }
+          eyebrow="What We Stand For"
+          title="Our core values"
+          body="The principles that guide every project, event, and decision inside Tech Fusion Club."
+          align="center"
         />
-
-        <Reveal className="glass-strong border-animated mt-12 grid overflow-hidden rounded-[2rem] lg:grid-cols-2">
-          <div className="relative min-h-[18rem] overflow-hidden">
-            <img
-              src={featuredEvent.cover}
-              alt={featuredEvent.title}
-              className="size-full object-cover opacity-90"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/20 to-transparent lg:bg-gradient-to-r" />
-          </div>
-          <div className="p-8 sm:p-12">
-            <span className="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-              {featuredEvent.status === "upcoming" ? "Upcoming" : featuredEvent.category}
-            </span>
-            <h3 className="mt-5 text-balance font-display text-2xl font-bold leading-snug sm:text-3xl">
-              {featuredEvent.title}
-            </h3>
-            <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              {featuredEvent.summary}
-            </p>
-            <ul className="mt-7 space-y-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <CalendarDays className="size-3.5 text-primary-glow" /> {formatEventDate(featuredEvent)}
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="size-3.5 text-primary-glow" /> {featuredEvent.venue}
-              </li>
-            </ul>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                to="/events"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03]"
-              >
-                Event details <ArrowRight className="size-4" />
-              </Link>
-              <a
-                href="https://viveka.techfusion.club"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
-              >
-                Viveka 6.0 Site <ExternalLink className="size-3.5" />
-              </a>
-            </div>
-          </div>
-        </Reveal>
-      </Section>
-
-      {/* ---------------- Domains ---------------- */}
-      <Section>
-        <SectionHeading
-          eyebrow="What we work on"
-          title="Six domains, one shared standard of craft"
-          body="Every member picks a domain on day one and gets a mentor inside it. Cross-domain project teams are the norm, not the exception."
-        />
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {domains.map((d, i) => (
-            <Reveal as="li" key={d.slug} delay={i * 60}>
-              <GlowCard className="glass lift group h-full rounded-2xl p-7">
-                <div className="flex items-baseline justify-between gap-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {values.map((v, i) => {
+            const icons = [
+              <Lightbulb className="size-6 text-primary-glow" />,
+              <Users className="size-6 text-accent" />,
+              <GraduationCap className="size-6 text-emerald-400" />,
+              <Trophy className="size-6 text-cyan-400" />,
+            ];
+            return (
+              <Reveal key={v.title} delay={i * 80}>
+                <GlowCard className="glass lift group h-full rounded-2xl p-6 text-center">
+                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-xl border border-border bg-surface-strong">
+                    {icons[i]}
+                  </div>
                   <h3 className="font-display text-lg font-bold transition-colors group-hover:text-primary-glow">
-                    {d.name}
+                    {v.title}
                   </h3>
-                  <span className="font-mono text-[11px] text-primary-glow/60">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.blurb}</p>
-                <ul className="mt-5 flex flex-wrap gap-1.5">
-                  {d.stack.map((t) => (
-                    <li
-                      key={t}
-                      className="rounded-full border border-border bg-surface px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground"
-                    >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </GlowCard>
-            </Reveal>
-          ))}
-        </ul>
-      </Section>
-
-      {/* ---------------- Member Projects Showcase ---------------- */}
-      <Section>
-        <SectionHeading
-          eyebrow="Proof of Work"
-          title="Shipped & Built by Fusion Members"
-          body="We don't just talk about tech — our members build open-source tools, mobile apps, and security scanners used across campus."
-        />
-        <div className="mt-12">
-          <Reveal>
-            <ProjectsShowcase />
-          </Reveal>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{v.body}</p>
+                </GlowCard>
+              </Reveal>
+            );
+          })}
         </div>
       </Section>
 
-      {/* ---------------- Club Roadmap / Member Journey ---------------- */}
+      {/* ═══════════════════ 11. MARQUEE REVERSE ═══════════════════ */}
+      <MarqueeStrip
+        items={[
+          "Web Development",
+          "AI / Machine Learning",
+          "Cybersecurity & CTF",
+          "App Development",
+          "Cloud & DevOps",
+          "UI/UX Design",
+          "Hackathons",
+          "Open Source",
+        ]}
+        speed={30}
+        reverse
+      />
+
+      {/* ═══════════════════ 12. CLUB ROADMAP ═══════════════════ */}
       <Section>
         <SectionHeading
           eyebrow="The Lifecycle"
           title="Your 1-Year Journey in Tech Fusion"
           body="From a beginner joining day one to organizing campus hackathons and landing tech roles."
+          align="center"
         />
         <div className="mt-12">
           <Reveal>
@@ -281,22 +340,53 @@ function Home() {
         </div>
       </Section>
 
-      {/* ---------------- NEW SECTION: Global Tech Partners & Sponsors Matrix ---------------- */}
+      {/* ═══════════════════ 13. TESTIMONIALS ═══════════════════ */}
       <Section>
         <SectionHeading
-          eyebrow="Ecosystem"
-          title="Supported by Industry Leaders"
-          body="Our events, cloud infrastructure, and dev tools are backed by global technology sponsors."
+          eyebrow="What People Say"
+          title="Voices from the community"
+          body="Hear from the students and faculty who make Tech Fusion Club what it is."
           align="center"
         />
         <div className="mt-12">
-          <Reveal>
-            <PartnersSection />
-          </Reveal>
+          <TestimonialsSection />
         </div>
       </Section>
 
-      {/* ---------------- Gallery strip ---------------- */}
+      {/* ═══════════════════ 14. TIMELINE ═══════════════════ */}
+      <Section>
+        <SectionHeading
+          eyebrow="Since 2019"
+          title="Our journey so far"
+          body="From a handful of students in a CS lab to the university's most active technical community."
+          align="center"
+        />
+        <div className="mx-auto mt-12 max-w-3xl space-y-0">
+          {timeline.map((t, i) => (
+            <Reveal key={t.year} delay={i * 60}>
+              <div className="relative flex gap-6 pb-10 last:pb-0">
+                <div className="flex flex-col items-center">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-primary/50 bg-card font-mono text-xs font-bold text-primary-glow shadow-[0_0_12px_rgba(217,72,15,0.3)]">
+                    {t.year.slice(-2)}
+                  </div>
+                  {i < timeline.length - 1 && (
+                    <div className="mt-2 w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-transparent" />
+                  )}
+                </div>
+                <div className="pt-1.5">
+                  <p className="font-mono text-[11px] uppercase tracking-widest text-primary-glow">
+                    {t.year}
+                  </p>
+                  <h3 className="mt-1 font-display text-lg font-bold text-foreground">{t.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* ═══════════════════ 15. GALLERY STRIP ═══════════════════ */}
       <Section>
         <SectionHeading
           eyebrow="From the floor"
@@ -310,31 +400,48 @@ function Home() {
             </Link>
           }
         />
-        <Reveal className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {previewPhotos.map((p, i) => (
-            <Link
-              key={p.src}
-              to="/gallery"
-              className="group relative overflow-hidden rounded-2xl border border-border"
-            >
-              <img
-                src={p.src}
-                alt={p.alt}
-                loading="lazy"
-                decoding="async"
-                className={`aspect-square w-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100 ${
-                  i === 0 ? "sm:aspect-square" : ""
-                }`}
-              />
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 to-transparent p-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                {p.event}
-              </span>
-            </Link>
-          ))}
-        </Reveal>
+        {previewPhotos.length > 0 ? (
+          <Reveal className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {previewPhotos.map((p) => (
+              <Link
+                key={p.src}
+                to="/gallery"
+                className="group relative overflow-hidden rounded-2xl border border-border"
+              >
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-square w-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 to-transparent p-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+                  {p.event}
+                </span>
+              </Link>
+            ))}
+          </Reveal>
+        ) : (
+          <Reveal className="mt-10 glass rounded-2xl p-8 text-center border border-border">
+            <p className="text-muted-foreground">Photos will appear here once added by the admin.</p>
+          </Reveal>
+        )}
       </Section>
 
+      {/* ═══════════════════ 16. FAQ ═══════════════════ */}
+      <Section>
+        <SectionHeading
+          eyebrow="Got Questions?"
+          title="Frequently asked questions"
+          body="Everything you need to know about joining and participating in Tech Fusion Club."
+          align="center"
+        />
+        <div className="mt-12">
+          <FAQSection />
+        </div>
+      </Section>
 
+      {/* ═══════════════════ 17. CTA BANNER ═══════════════════ */}
       <CTABanner />
     </>
   );

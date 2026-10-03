@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -12,7 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
-import { ThemeProvider } from "@/lib/theme";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -162,12 +163,6 @@ function RootShell({ children }: { children: ReactNode }) {
             href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" 
           />
         </noscript>
-        {/* Blocking script: apply saved theme BEFORE first paint to prevent FOUC */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("tf-theme");if(t==="dark"||t==="light"){document.documentElement.className=t}else{document.documentElement.className="light"}}catch(e){document.documentElement.className="light"}})()`,
-          }}
-        />
       </head>
       <body>
         {children}
@@ -179,24 +174,25 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const routerState = useRouterState();
+  const isAdministration = routerState.location.pathname.startsWith('/administration');
 
   return (
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground"
-        >
-          Skip to content
-        </a>
-        <Nav />
-        <main id="main" className="pt-16 sm:pt-20">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <Footer />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground"
+      >
+        Skip to content
+      </a>
+      {!isAdministration && <Nav />}
+      <main id="main" className={!isAdministration ? "pt-16 sm:pt-20" : ""}>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      {!isAdministration && <Footer />}
+      <Toaster theme="dark" position="bottom-right" richColors />
+    </QueryClientProvider>
   );
 }
 

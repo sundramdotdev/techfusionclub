@@ -65,86 +65,6 @@
 :root {
   --radius: 0.875rem;
 
-  /* Base: #05060A / #0B0D14 / #12141F */
-  --background: oklch(0.123 0.011 271);
-  --foreground: oklch(0.97 0.004 270);
-
-  --card: oklch(0.16 0.015 272);
-  --card-foreground: oklch(0.97 0.004 270);
-  --popover: oklch(0.195 0.022 276);
-  --popover-foreground: oklch(0.97 0.004 270);
-
-  /* Volt Orange #D9480F, lighter #FF7A45, text on fill #1A0500 */
-  --primary: oklch(0.6 0.19 38);
-  --primary-foreground: oklch(0.153 0.044 45);
-  --primary-glow: oklch(0.727 0.176 41);
-
-  --secondary: oklch(0.24 0.022 276);
-  --secondary-foreground: oklch(0.97 0.004 270);
-
-  --muted: oklch(0.22 0.02 276);
-  --muted-foreground: oklch(0.72 0.008 270);
-
-  --accent: oklch(0.824 0.106 46);
-  --accent-foreground: oklch(0.153 0.044 45);
-
-  --destructive: oklch(0.63 0.21 22);
-  --destructive-foreground: oklch(0.97 0.01 250);
-
-  --border: oklch(0.34 0.024 276 / 55%);
-  --input: oklch(0.32 0.024 276 / 70%);
-  --ring: oklch(0.727 0.176 41);
-
-  --surface: oklch(0.99 0.005 270 / 5%);
-  --surface-strong: oklch(0.99 0.005 270 / 9%);
-
-  --chart-1: oklch(0.6 0.19 38);
-  --chart-2: oklch(0.727 0.176 41);
-  --chart-3: oklch(0.824 0.106 46);
-  --chart-4: oklch(0.68 0.14 60);
-  --chart-5: oklch(0.55 0.12 30);
-
-  --sidebar: oklch(0.16 0.015 272);
-  --sidebar-foreground: oklch(0.97 0.004 270);
-  --sidebar-primary: oklch(0.6 0.19 38);
-  --sidebar-primary-foreground: oklch(0.153 0.044 45);
-  --sidebar-accent: oklch(0.22 0.02 276);
-  --sidebar-accent-foreground: oklch(0.97 0.004 270);
-  --sidebar-border: oklch(0.34 0.024 276 / 55%);
-  --sidebar-ring: oklch(0.727 0.176 41);
-
-  --gradient-hero: radial-gradient(
-      120% 90% at 15% 0%,
-      oklch(0.6 0.19 38 / 26%) 0%,
-      transparent 60%
-    ),
-    radial-gradient(100% 80% at 90% 10%, oklch(0.727 0.176 41 / 15%) 0%, transparent 55%);
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--primary-glow) 55%,
-    var(--accent) 100%
-  );
-  --gradient-line: linear-gradient(90deg, transparent, oklch(0.727 0.176 41 / 65%), transparent);
-  --gradient-orb: radial-gradient(
-    circle at 32% 28%,
-    oklch(0.9 0.08 55) 0%,
-    oklch(0.727 0.176 41) 38%,
-    oklch(0.6 0.19 38) 70%,
-    oklch(0.42 0.15 35) 100%
-  );
-
-  --shadow-glass: 0 1px 0 0 oklch(1 0 0 / 6%) inset, 0 24px 60px -24px oklch(0.08 0.01 272 / 85%);
-  --shadow-glow: 0 0 0 1px oklch(0.6 0.19 38 / 30%), 0 18px 60px -18px oklch(0.6 0.19 38 / 50%);
-  --shadow-accent-glow: 0 0 0 1px oklch(0.727 0.176 41 / 35%),
-    0 18px 60px -18px oklch(0.727 0.176 41 / 45%);
-}
-
-.dark {
-  color-scheme: dark;
-}
-
-html.light {
   color-scheme: light;
   --background: oklch(0.985 0.005 270);
   --foreground: oklch(0.14 0.02 270);
@@ -174,8 +94,46 @@ html.light {
   --surface: oklch(0.95 0.01 270 / 80%);
   --surface-strong: oklch(0.92 0.01 270 / 95%);
 
+  --chart-1: oklch(0.6 0.19 38);
+  --chart-2: oklch(0.727 0.176 41);
+  --chart-3: oklch(0.824 0.106 46);
+  --chart-4: oklch(0.68 0.14 60);
+  --chart-5: oklch(0.55 0.12 30);
+
+  --sidebar: oklch(0.97 0.008 270);
+  --sidebar-foreground: oklch(0.14 0.02 270);
+  --sidebar-primary: oklch(0.55 0.22 38);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.93 0.01 270);
+  --sidebar-accent-foreground: oklch(0.14 0.02 270);
+  --sidebar-border: oklch(0.85 0.015 270 / 80%);
+  --sidebar-ring: oklch(0.55 0.22 38);
+
+  --gradient-hero: radial-gradient(
+      120% 90% at 15% 0%,
+      oklch(0.6 0.19 38 / 26%) 0%,
+      transparent 60%
+    ),
+    radial-gradient(100% 80% at 90% 10%, oklch(0.727 0.176 41 / 15%) 0%, transparent 55%);
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-glow) 55%,
+    var(--accent) 100%
+  );
+  --gradient-line: linear-gradient(90deg, transparent, oklch(0.727 0.176 41 / 65%), transparent);
+  --gradient-orb: radial-gradient(
+    circle at 32% 28%,
+    oklch(0.9 0.08 55) 0%,
+    oklch(0.727 0.176 41) 38%,
+    oklch(0.6 0.19 38) 70%,
+    oklch(0.42 0.15 35) 100%
+  );
+
   --shadow-glass: 0 1px 0 0 oklch(1 0 0 / 80%) inset, 0 18px 45px -15px oklch(0.2 0.02 270 / 15%);
   --shadow-glow: 0 0 0 1px oklch(0.55 0.22 38 / 25%), 0 12px 35px -10px oklch(0.55 0.22 38 / 25%);
+  --shadow-accent-glow: 0 0 0 1px oklch(0.727 0.176 41 / 35%),
+    0 18px 60px -18px oklch(0.727 0.176 41 / 45%);
 }
 
 @layer base {
@@ -525,6 +483,51 @@ html.light {
 
 @utility animate-flicker {
   animation: fusion-flicker 0.55s ease-out both;
+}
+
+/* --- Marquee ticker --- */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee-scroll var(--duration, 35s) linear infinite;
+}
+
+@utility animate-marquee-reverse {
+  animation: marquee-scroll-reverse var(--duration, 35s) linear infinite;
+}
+
+/* --- Video card overlay --- */
+@utility video-card-overlay {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      to top,
+      oklch(0.08 0.015 272 / 95%) 0%,
+      oklch(0.08 0.015 272 / 40%) 40%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
 }
 
 .reveal {
