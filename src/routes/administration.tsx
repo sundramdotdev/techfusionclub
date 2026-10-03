@@ -1744,8 +1744,9 @@ function TrashAdmin() {
               items.map((item) => {
                 const msLeft = item.expiresAt - Date.now();
                 const hoursLeft = Math.max(0, Math.floor(msLeft / (1000 * 60 * 60)));
-                const itemLabel =
-                  item.data?.title || item.data?.name || item.data?.headline || item.originalId;
+                const itemLabel = String(
+                  item.data?.["title"] || item.data?.["name"] || item.data?.["headline"] || item.originalId
+                );
 
                 return (
                   <tr key={item.id} className="hover:bg-surface-strong transition-colors group">
