@@ -9,8 +9,8 @@ export function StatCounter({
   className,
 }: {
   value: number;
-  prefix?: string;
-  suffix?: string;
+  prefix?: string | undefined;
+  suffix?: string | undefined;
   label: string;
   className?: string;
 }) {

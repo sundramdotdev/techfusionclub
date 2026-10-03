@@ -16,7 +16,7 @@
   - **Joint Secretaries (3)**
   - **Department Heads (6)**: Technical, Documentation, Media, Creative, Management, and Treasurer
   - **Core Teams (20)**: Active domain developers & organizers
-- 📅 **Comprehensive Event System**: Filterable events by year and category with static showcase cards and external links to the annual **Viveka 6.0 Fest** (`https://viveka.techfusion.club`).
+- 📅 **Comprehensive Event System**: Filterable events by year and category with static showcase cards and external links to the annual **Viveka 6.0 Fest** (`https://vivekatheintelligence.in/`).
 - 💎 **Ultra-Responsive & Modern UI**: Built with Tailwind CSS, Lucide Icons, glassmorphic obsidian containers, and smooth CSS keyframe micro-animations.
 
 ---
@@ -34,9 +34,11 @@
 ## 🚀 Quick Start
 
 ### 1. Prerequisites
+
 Make sure you have Node.js (v18+) and `npm` installed.
 
 ### 2. Installation
+
 ```bash
 git clone https://github.com/webdevpraveen/techfusionclub.git
 cd techfusionclub
@@ -44,13 +46,17 @@ npm install
 ```
 
 ### 3. Development Server
+
 Start the local Vite development server:
+
 ```bash
 npm run dev
 ```
+
 Open **[http://localhost:8080](http://localhost:8080)** in your browser.
 
 ### 4. Build for Production
+
 ```bash
 npm run build
 ```

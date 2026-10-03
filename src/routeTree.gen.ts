@@ -11,11 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdministrationRouteImport } from './routes/administration'
 import { Route as AlumniRouteImport } from './routes/alumni'
+import { Route as AnnouncementsRouteImport } from './routes/announcements'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GalleryRouteImport } from './routes/gallery'
-import { Route as GovernanceRouteImport } from './routes/governance'
-import { Route as JoinRouteImport } from './routes/join'
-import { Route as TeamRouteImport } from './routes/team'
+import { Route as MembersRouteImport } from './routes/members'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -28,9 +29,24 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdministrationRoute = AdministrationRouteImport.update({
+  id: '/administration',
+  path: '/administration',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AlumniRoute = AlumniRouteImport.update({
   id: '/alumni',
   path: '/alumni',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnnouncementsRoute = AnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -38,19 +54,9 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GovernanceRoute = GovernanceRouteImport.update({
-  id: '/governance',
-  path: '/governance',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinRoute = JoinRouteImport.update({
-  id: '/join',
-  path: '/join',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TeamRoute = TeamRouteImport.update({
-  id: '/team',
-  path: '/team',
+const MembersRoute = MembersRouteImport.update({
+  id: '/members',
+  path: '/members',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsIndexRoute = EventsIndexRouteImport.update({
@@ -62,32 +68,35 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/administration': typeof AdministrationRoute
   '/alumni': typeof AlumniRoute
+  '/announcements': typeof AnnouncementsRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/governance': typeof GovernanceRoute
-  '/join': typeof JoinRoute
-  '/team': typeof TeamRoute
+  '/members': typeof MembersRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/administration': typeof AdministrationRoute
   '/alumni': typeof AlumniRoute
+  '/announcements': typeof AnnouncementsRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/governance': typeof GovernanceRoute
-  '/join': typeof JoinRoute
-  '/team': typeof TeamRoute
+  '/members': typeof MembersRoute
   '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/administration': typeof AdministrationRoute
   '/alumni': typeof AlumniRoute
+  '/announcements': typeof AnnouncementsRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/governance': typeof GovernanceRoute
-  '/join': typeof JoinRoute
-  '/team': typeof TeamRoute
+  '/members': typeof MembersRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRouteTypes {
@@ -95,42 +104,46 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/administration'
     | '/alumni'
+    | '/announcements'
+    | '/contact'
     | '/gallery'
-    | '/governance'
-    | '/join'
-    | '/team'
+    | '/members'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/administration'
     | '/alumni'
+    | '/announcements'
+    | '/contact'
     | '/gallery'
-    | '/governance'
-    | '/join'
-    | '/team'
+    | '/members'
     | '/events'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/administration'
     | '/alumni'
+    | '/announcements'
+    | '/contact'
     | '/gallery'
-    | '/governance'
-    | '/join'
-    | '/team'
+    | '/members'
     | '/events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdministrationRoute: typeof AdministrationRoute
   AlumniRoute: typeof AlumniRoute
+  AnnouncementsRoute: typeof AnnouncementsRoute
+  ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
-  GovernanceRoute: typeof GovernanceRoute
-  JoinRoute: typeof JoinRoute
-  TeamRoute: typeof TeamRoute
+  MembersRoute: typeof MembersRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
 
@@ -150,11 +163,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/administration': {
+      id: '/administration'
+      path: '/administration'
+      fullPath: '/administration'
+      preLoaderRoute: typeof AdministrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/alumni': {
       id: '/alumni'
       path: '/alumni'
       fullPath: '/alumni'
       preLoaderRoute: typeof AlumniRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/announcements': {
+      id: '/announcements'
+      path: '/announcements'
+      fullPath: '/announcements'
+      preLoaderRoute: typeof AnnouncementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -164,25 +198,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/governance': {
-      id: '/governance'
-      path: '/governance'
-      fullPath: '/governance'
-      preLoaderRoute: typeof GovernanceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/join': {
-      id: '/join'
-      path: '/join'
-      fullPath: '/join'
-      preLoaderRoute: typeof JoinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/team': {
-      id: '/team'
-      path: '/team'
-      fullPath: '/team'
-      preLoaderRoute: typeof TeamRouteImport
+    '/members': {
+      id: '/members'
+      path: '/members'
+      fullPath: '/members'
+      preLoaderRoute: typeof MembersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events/': {
@@ -198,11 +218,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdministrationRoute: AdministrationRoute,
   AlumniRoute: AlumniRoute,
+  AnnouncementsRoute: AnnouncementsRoute,
+  ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
-  GovernanceRoute: GovernanceRoute,
-  JoinRoute: JoinRoute,
-  TeamRoute: TeamRoute,
+  MembersRoute: MembersRoute,
   EventsIndexRoute: EventsIndexRoute,
 }
 export const routeTree = rootRouteImport

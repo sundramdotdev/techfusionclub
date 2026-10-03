@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { eventCategories, events, eventYears, type EventCategory } from "@/data/events";
+import { eventCategories, type EventCategory } from "@/data/events";
+import { getEvents } from "@/lib/db";
 import { EventCard, FilterPill } from "@/components/site/EventCard";
+import { EventModal } from "@/components/site/EventModal";
+import type { ClubEvent } from "@/data/events";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
 import { CTABanner } from "@/components/site/CTABanner";
@@ -17,30 +20,44 @@ export const Route = createFileRoute("/events/")({
       },
       {
         name: "keywords",
-        content: "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tech events, hackathon srmu, coding workshops",
+        content:
+          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tech events, hackathon srmu, coding workshops",
       },
       { property: "og:title", content: "Events & Hackathons | Tech Fusion Club SRMU" },
       {
         property: "og:description",
-        content: "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU.",
+        content:
+          "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU.",
       },
       { property: "og:url", content: "https://techfusionclub.vercel.app/events" },
       { name: "twitter:title", content: "Tech Fusion Club (TFC) Events" },
       {
         name: "twitter:description",
-        content: "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU.",
+        content:
+          "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU.",
       },
     ],
     links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/events" }],
   }),
+  loader: async () => {
+    const fetchedEvents = await getEvents();
+    return { events: fetchedEvents };
+  },
   component: Events,
 });
 
 const upcomingYears = [2027];
 
 function Events() {
+  const { events } = Route.useLoaderData();
   const [year, setYear] = useState<number | "all">("all");
   const [category, setCategory] = useState<EventCategory | "all">("all");
+  const [selectedEvent, setSelectedEvent] = useState<ClubEvent | null>(null);
+
+  const eventYears = useMemo(
+    () => Array.from(new Set(events.map((e) => e.year))).sort((a, b) => b - a),
+    [events],
+  );
 
   const filtered = useMemo(
     () =>
@@ -106,7 +123,11 @@ function Events() {
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((e, i) => (
               <Reveal as="li" key={e.slug} delay={(i % 3) * 70}>
-                <EventCard event={e} index={i} />
+                <EventCard
+                  event={e as ClubEvent}
+                  index={i}
+                  onClick={() => setSelectedEvent(e as ClubEvent)}
+                />
               </Reveal>
             ))}
           </ul>
@@ -130,6 +151,8 @@ function Events() {
         title="Members hear about events first."
         body="Applications open twice a year. Join to get event invites, mentor access, and project teams."
       />
+
+      <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
     </>
   );
 }

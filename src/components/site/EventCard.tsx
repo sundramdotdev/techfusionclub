@@ -1,4 +1,4 @@
-import { CalendarDays, MapPin, Users } from "lucide-react";
+import { CalendarDays, MapPin, Users, ArrowRight } from "lucide-react";
 import type { ClubEvent } from "@/data/events";
 import { formatEventDate } from "@/data/events";
 import { cn } from "@/lib/utils";
@@ -7,16 +7,22 @@ import { useCursorGlow } from "@/lib/motion";
 export function EventCard({
   event,
   index = 0,
+  onClick,
 }: {
   event: ClubEvent;
   index?: number;
+  onClick?: () => void;
 }) {
-  const glowRef = useCursorGlow<HTMLElement>();
+  const glowRef = useCursorGlow<HTMLDivElement>();
 
   return (
-    <article
+    <div
+      onClick={onClick}
       ref={glowRef}
-      className="glass lift cursor-glow group relative overflow-hidden rounded-3xl"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick?.()}
+      className="glass lift cursor-glow group relative overflow-hidden rounded-3xl block text-left w-full outline-none"
     >
       <div className="relative z-10 block outline-none">
         <div className="relative aspect-[16/10] overflow-hidden">
@@ -64,9 +70,13 @@ export function EventCard({
               </li>
             ) : null}
           </ul>
+          <div className="mt-5 border-t border-border/50 pt-5 flex items-center justify-between text-sm font-semibold text-primary-glow">
+            <span>View Event</span>
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </div>
         </div>
       </div>
-    </article>
+    </div>
   );
 }
 
