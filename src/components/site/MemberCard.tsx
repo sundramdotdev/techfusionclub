@@ -4,7 +4,6 @@ import type { Member } from "@/data/members";
 import { club } from "@/data/club";
 import { cn } from "@/lib/utils";
 import { useCursorGlow } from "@/lib/motion";
-import { useTheme } from "@/lib/theme";
 
 
 const socialIcons = {
@@ -35,9 +34,7 @@ export function MemberCard({
   size?: "lg" | "md" | "sm";
   index?: number;
 }) {
-  const { theme } = useTheme();
-  const isLight = theme === "light";
-  const logoSrc = isLight ? "/images/branding/techfusionlogolight-sm.webp" : "/images/branding/techfusionlogo-sm.webp";
+  const logoSrc = "/images/branding/techfusionlogolight-sm.webp";
 
   const [flipped, setFlipped] = useState(false);
   const backId = useId();
@@ -132,7 +129,7 @@ export function MemberCard({
               <div className="divider-glow my-4" />
 
               <h3 className="font-display text-lg font-bold leading-tight sm:text-xl">
-                {member.fullName}
+                {member.name}
               </h3>
               <p className="mt-1 text-sm font-medium text-primary-glow">{member.designation}</p>
 

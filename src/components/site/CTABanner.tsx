@@ -26,7 +26,7 @@ export function CTABanner({
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                to="/join"
+                to="/contact"
                 className="group pulse-glow inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03] sm:w-auto"
               >
                 Apply to join

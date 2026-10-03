@@ -1,12 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles, Terminal, Shield, Cpu, Code2, Layers, CheckCircle2, Zap } from "lucide-react";
 import { GlowCard } from "@/components/site/GlowCard";
-import { useTheme } from "@/lib/theme";
-
 export function HeroShowcase() {
-  const { theme } = useTheme();
-  const isLight = theme === "light";
-  const logoSrc = isLight ? "/images/branding/techfusionlogolight.png" : "/images/branding/techfusionlogo.png";
+  const logoSrc = "/images/branding/techfusionlogolight.png";
 
   return (
     <div className="relative w-full select-none">

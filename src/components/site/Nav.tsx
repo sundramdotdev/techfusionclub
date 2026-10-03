@@ -2,23 +2,24 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Sun, Moon, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/lib/theme";
 import { Logo } from "./Logo";
 
-const links = [
+type NavLink = { to: any, label: string } | { href: string, label: string, external: true };
+
+const links: NavLink[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/governance", label: "Governance" },
   { to: "/events", label: "Events" },
-  { to: "/team", label: "Team" },
+  { to: "/members", label: "Members" },
   { to: "/alumni", label: "Alumni" },
   { to: "/gallery", label: "Gallery" },
-] as const;
+  { to: "/announcements", label: "Announcements" },
+  { to: "/contact", label: "Contact" },
+];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -88,28 +89,8 @@ export function Nav() {
         </ul>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Light / Dark Theme Toggle Button */}
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-            title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-            className="glass hover:bg-surface-strong relative inline-flex size-10 items-center justify-center rounded-full text-foreground transition-transform duration-300 hover:scale-110 border border-border"
-          >
-            {theme === "dark" ? (
-              <Sun className="size-5 text-amber-400 transition-all duration-300" />
-            ) : (
-              <Moon className="size-5 text-indigo-600 transition-all duration-300" />
-            )}
-          </button>
 
-          <Link
-            to="/join"
-            className="group pulse-glow relative hidden overflow-hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03] sm:inline-flex"
-          >
-            <span className="relative z-10">Join the Club</span>
-            <span className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-primary-foreground/25 opacity-0 group-hover:animate-sheen group-hover:opacity-100" />
-          </Link>
+
 
           <button
             type="button"
@@ -157,13 +138,7 @@ export function Nav() {
             </li>
           ))}
         </ul>
-        <Link
-          to="/join"
-          onClick={() => setOpen(false)}
-          className="mt-6 block rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground"
-        >
-          Join the Club
-        </Link>
+
       </div>
     </header>
   );

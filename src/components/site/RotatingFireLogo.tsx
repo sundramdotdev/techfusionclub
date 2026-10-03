@@ -1,10 +1,6 @@
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/lib/theme";
-
 export function RotatingFireLogo({ className }: { className?: string }) {
-  const { theme } = useTheme();
-  const isLight = theme === "light";
-  const logoSrc = isLight ? "/images/branding/techfusionlogolight.png" : "/images/branding/techfusionlogo.png";
+  const logoSrc = "/images/branding/techfusionlogolight.png";
 
   return (
     <div className={cn("relative flex items-center justify-center select-none py-8 sm:py-12 overflow-visible", className)}>
