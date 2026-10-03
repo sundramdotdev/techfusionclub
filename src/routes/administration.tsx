@@ -129,9 +129,28 @@ function AdminShell() {
           )}
 
           <button
-            onClick={() => {
+            onClick={async () => {
               setAuthError(null);
-              signInWithGoogle();
+              try {
+                await signInWithGoogle();
+              } catch (err: unknown) {
+                console.error("Sign-in error:", err);
+                const error = err as { code?: string; message?: string };
+                const code = error?.code || "";
+                if (code === "auth/unauthorized-domain") {
+                  setAuthError(
+                    `Unauthorized Domain: '${window.location.hostname}' is not authorized in Firebase. Please add '${window.location.hostname}' to Firebase Console -> Authentication -> Settings -> Authorized Domains.`,
+                  );
+                } else if (code === "auth/popup-blocked") {
+                  setAuthError(
+                    "Sign-in popup was blocked by your browser. Please allow popups for this site in your browser settings.",
+                  );
+                } else if (code === "auth/popup-closed-by-user") {
+                  setAuthError("Sign-in popup was closed before completing.");
+                } else {
+                  setAuthError(error?.message || "Sign-in failed. Please check browser console.");
+                }
+              }
             }}
             className="group relative flex w-full items-center justify-center gap-3 rounded-xl bg-background border border-border px-6 py-4 font-semibold text-foreground hover:bg-surface-strong hover:border-primary/50 transition-all duration-300"
           >
