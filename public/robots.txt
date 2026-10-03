@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /administration
 Allow: /
 
 Sitemap: https://techfusionclub.vercel.app/sitemap.xml

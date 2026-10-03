@@ -2,12 +2,13 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Function to check if the user is an admin
+    // Function to check if the user is an admin with a verified email
     function isAdmin() {
-      return request.auth != null && (
-        request.auth.token.email == "webdevpraveen@gmail.com" || 
-        request.auth.token.email == "techfusionclub@srmu.ac.in"
-      );
+      return request.auth != null &&
+        request.auth.token.email_verified == true && (
+          request.auth.token.email == "webdevpraveen@gmail.com" || 
+          request.auth.token.email == "techfusionclub@srmu.ac.in"
+        );
     }
 
     // Events collection
@@ -40,9 +41,14 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Registrations collection
+    // Registrations collection — strict schema and length validation for public create
     match /registrations/{registrationId} {
-      allow create: if true;
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'eventSlug', 'submittedAt']) &&
+                       request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 100 &&
+                       request.resource.data.email is string && request.resource.data.email.size() > 0 && request.resource.data.email.size() <= 100 &&
+                       request.resource.data.eventSlug is string && request.resource.data.eventSlug.size() > 0 && request.resource.data.eventSlug.size() <= 100 &&
+                       request.resource.data.submittedAt is string && request.resource.data.submittedAt.size() <= 50 &&
+                       request.resource.data.size() <= 15;
       allow read, update, delete: if isAdmin();
     }
 

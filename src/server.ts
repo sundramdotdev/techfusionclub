@@ -31,16 +31,7 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   const errorObj = consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`);
   console.error(errorObj);
 
-  const errorMessage =
-    errorObj instanceof Error ? errorObj.stack || errorObj.message : String(errorObj);
-  const errorHtml = renderErrorPage().replace(
-    "</body>",
-    `<div style="padding: 2rem; background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; margin: 2rem; font-family: monospace; white-space: pre-wrap;">
-      <strong>SSR Error (H3):</strong><br/>
-      ${errorMessage}
-    </div></body>`,
-  );
-  return new Response(errorHtml, {
+  return new Response(renderErrorPage(), {
     status: 500,
     headers: { "content-type": "text/html; charset=utf-8" },
   });
@@ -63,15 +54,7 @@ export default {
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);
-      const errorMessage = error instanceof Error ? error.stack || error.message : String(error);
-      const errorHtml = renderErrorPage().replace(
-        "</body>",
-        `<div style="padding: 2rem; background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; margin: 2rem; font-family: monospace; white-space: pre-wrap;">
-          <strong>SSR Error:</strong><br/>
-          ${errorMessage}
-        </div></body>`,
-      );
-      return new Response(errorHtml, {
+      return new Response(renderErrorPage(), {
         status: 500,
         headers: { "content-type": "text/html; charset=utf-8" },
       });

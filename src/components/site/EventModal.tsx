@@ -189,39 +189,42 @@ export function EventModal({ event, onClose }: EventModalProps) {
           </div>
         )}
 
-        {mode === "register" && event.googleFormUrl && (
-          <div className="animate-in slide-in-from-right-4 fade-in duration-300">
-            <div className="flex items-center mb-6">
-              <button
-                onClick={() => setMode("details")}
-                className="inline-flex items-center text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors bg-surface-strong px-3 py-1.5 rounded-full"
+        {mode === "register" &&
+          event.googleFormUrl &&
+          event.googleFormUrl.startsWith("https://") && (
+            <div className="animate-in slide-in-from-right-4 fade-in duration-300">
+              <div className="flex items-center mb-6">
+                <button
+                  onClick={() => setMode("details")}
+                  className="inline-flex items-center text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors bg-surface-strong px-3 py-1.5 rounded-full"
+                >
+                  <ArrowLeft className="mr-2 size-3.5" /> Back to details
+                </button>
+              </div>
+              <div
+                className="w-full rounded-xl overflow-hidden bg-white shadow-inner relative"
+                style={{ height: "70vh", minHeight: "500px" }}
               >
-                <ArrowLeft className="mr-2 size-3.5" /> Back to details
-              </button>
+                <iframe
+                  src={
+                    event.googleFormUrl.includes("?")
+                      ? event.googleFormUrl + "&embedded=true"
+                      : event.googleFormUrl + "?embedded=true"
+                  }
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  marginHeight={0}
+                  marginWidth={0}
+                  title="Registration Form"
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                  className="absolute inset-0 w-full h-full border-none"
+                >
+                  Loading…
+                </iframe>
+              </div>
             </div>
-            <div
-              className="w-full rounded-xl overflow-hidden bg-white shadow-inner relative"
-              style={{ height: "70vh", minHeight: "500px" }}
-            >
-              <iframe
-                src={
-                  event.googleFormUrl.includes("?")
-                    ? event.googleFormUrl + "&embedded=true"
-                    : event.googleFormUrl + "?embedded=true"
-                }
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                marginHeight={0}
-                marginWidth={0}
-                title="Registration Form"
-                className="absolute inset-0 w-full h-full border-none"
-              >
-                Loading…
-              </iframe>
-            </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );
