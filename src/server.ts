@@ -30,14 +30,15 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 
   const errorObj = consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`);
   console.error(errorObj);
-  
-  const errorMessage = errorObj instanceof Error ? errorObj.stack || errorObj.message : String(errorObj);
+
+  const errorMessage =
+    errorObj instanceof Error ? errorObj.stack || errorObj.message : String(errorObj);
   const errorHtml = renderErrorPage().replace(
     "</body>",
     `<div style="padding: 2rem; background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; margin: 2rem; font-family: monospace; white-space: pre-wrap;">
       <strong>SSR Error (H3):</strong><br/>
       ${errorMessage}
-    </div></body>`
+    </div></body>`,
   );
   return new Response(errorHtml, {
     status: 500,
@@ -68,7 +69,7 @@ export default {
         `<div style="padding: 2rem; background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; margin: 2rem; font-family: monospace; white-space: pre-wrap;">
           <strong>SSR Error:</strong><br/>
           ${errorMessage}
-        </div></body>`
+        </div></body>`,
       );
       return new Response(errorHtml, {
         status: 500,

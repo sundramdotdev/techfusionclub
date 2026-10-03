@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://techfusionclub.vercel.app/sitemap.xml
