@@ -5,7 +5,6 @@ import { club } from "@/data/club";
 import { cn } from "@/lib/utils";
 import { useCursorGlow } from "@/lib/motion";
 
-
 const socialIcons = {
   linkedin: Linkedin,
   github: Github,
@@ -62,7 +61,6 @@ export function MemberCard({
       className={cn("group cursor-glow rounded-3xl", heights[size])}
       style={{ perspective: "1400px" }}
     >
-
       <button
         type="button"
         onClick={() => setFlipped((v) => !v)}
@@ -151,7 +149,7 @@ export function MemberCard({
                   {Object.keys(socialIcons).map((key) => {
                     const Icon = socialIcons[key as keyof typeof socialIcons];
                     const href = member.socials?.[key as keyof typeof member.socials] || "#";
-                    
+
                     return (
                       <a
                         key={key}
@@ -166,9 +164,9 @@ export function MemberCard({
                         }}
                         className={cn(
                           "grid size-9 place-items-center rounded-full border transition-colors",
-                          href !== "#" 
+                          href !== "#"
                             ? "border-border bg-surface text-muted-foreground hover:border-primary/50 hover:text-primary-glow"
-                            : "border-transparent bg-surface/50 text-muted-foreground/30 cursor-not-allowed"
+                            : "border-transparent bg-surface/50 text-muted-foreground/30 cursor-not-allowed",
                         )}
                       >
                         <Icon className="size-4" />

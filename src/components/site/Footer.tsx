@@ -3,7 +3,7 @@ import { Mail, ExternalLink } from "lucide-react";
 import { club } from "@/data/club";
 import { Logo } from "./Logo";
 
-type FooterLink = { to: any, label: string } | { href: string, label: string, external: true };
+type FooterLink = { to: any; label: string } | { href: string; label: string; external: true };
 
 const quickLinks: FooterLink[] = [
   { to: "/about", label: "About" },
@@ -59,7 +59,10 @@ export function Footer() {
                       <ExternalLink className="size-3" />
                     </a>
                   ) : (
-                    <Link to={"to" in l ? l.to : "/"} className="transition-colors hover:text-primary-glow">
+                    <Link
+                      to={"to" in l ? l.to : "/"}
+                      className="transition-colors hover:text-primary-glow"
+                    >
                       {l.label}
                     </Link>
                   )}
@@ -76,9 +79,19 @@ export function Footer() {
               {moreLinks.map((l) => (
                 <li key={"to" in l ? l.to : l.href}>
                   {"external" in l && l.external ? (
-                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary-glow">{l.label}</a>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors hover:text-primary-glow"
+                    >
+                      {l.label}
+                    </a>
                   ) : (
-                    <Link to={"to" in l ? l.to : "/"} className="transition-colors hover:text-primary-glow">
+                    <Link
+                      to={"to" in l ? l.to : "/"}
+                      className="transition-colors hover:text-primary-glow"
+                    >
                       {l.label}
                     </Link>
                   )}

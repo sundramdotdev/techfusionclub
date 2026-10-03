@@ -20,18 +20,21 @@ export const Route = createFileRoute("/members")({
       },
       {
         name: "keywords",
-        content: "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tech fusion team, coding club leaders",
+        content:
+          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tech fusion team, coding club leaders",
       },
       { property: "og:title", content: "Core Team | Tech Fusion Club (TFC) SRMU" },
       {
         property: "og:description",
-        content: "Meet the core team of Tech Fusion Club (TFC) at SRMU. Driving Viveka fest and tech events.",
+        content:
+          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Driving Viveka fest and tech events.",
       },
       { property: "og:url", content: "https://techfusionclub.vercel.app/team" },
       { name: "twitter:title", content: "Team | Tech Fusion Club (TFC SRMU)" },
       {
         name: "twitter:description",
-        content: "Meet the core team of Tech Fusion Club (TFC) at SRMU. Driving Viveka fest and tech events.",
+        content:
+          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Driving Viveka fest and tech events.",
       },
     ],
     links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/team" }],
@@ -52,13 +55,13 @@ function Team() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMembers().then(data => {
+    getMembers().then((data) => {
       setAllMembers(data);
       setLoading(false);
     });
   }, []);
 
-  const membersByTier = (tier: MemberTier) => allMembers.filter(m => m.tier === tier);
+  const membersByTier = (tier: MemberTier) => allMembers.filter((m) => m.tier === tier);
 
   if (loading) {
     return (
@@ -102,7 +105,8 @@ function Team() {
             The hierarchy powering Tech Fusion Club.
           </h1>
           <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-            Tap or click any card to flip it and reveal that member's official access badge — domain, branch, year, and ID code.
+            Tap or click any card to flip it and reveal that member's official access badge —
+            domain, branch, year, and ID code.
           </p>
         </Reveal>
       </Section>
@@ -113,13 +117,15 @@ function Team() {
         return (
           <Section key={tier} className="py-10 sm:py-12">
             <Reveal className="flex flex-col gap-2 border-b border-border/70 pb-5">
-              <p className="font-display text-2xl font-bold text-foreground">{tierMeta[tier].label}</p>
+              <p className="font-display text-2xl font-bold text-foreground">
+                {tierMeta[tier].label}
+              </p>
               <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
                 {tierMeta[tier].description}
               </p>
             </Reveal>
             {(() => {
-              const isEsports = (m: typeof people[0]) =>
+              const isEsports = (m: (typeof people)[0]) =>
                 m.club === "Esports" ||
                 m.domain.toLowerCase().includes("e-sports") ||
                 m.domain.toLowerCase().includes("esport");
@@ -133,7 +139,7 @@ function Team() {
                 "Media",
               ];
 
-              const getDeptIndex = (m: typeof people[0]) => {
+              const getDeptIndex = (m: (typeof people)[0]) => {
                 const d = m.designation;
                 const idx = departmentOrder.findIndex((dept) => d.includes(dept));
                 return idx === -1 ? 999 : idx;

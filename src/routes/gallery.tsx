@@ -18,13 +18,20 @@ export const Route = createFileRoute("/gallery")({
       },
       {
         name: "keywords",
-        content: "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tfc gallery, srmu tech events",
+        content:
+          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tfc gallery, srmu tech events",
       },
       { property: "og:title", content: "Event Gallery | Tech Fusion Club (TFC) SRMU" },
-      { property: "og:description", content: "Photos from Tech Fusion Club (TFC) workshops and the Viveka fest." },
+      {
+        property: "og:description",
+        content: "Photos from Tech Fusion Club (TFC) workshops and the Viveka fest.",
+      },
       { property: "og:url", content: "https://techfusionclub.vercel.app/gallery" },
       { name: "twitter:title", content: "Event Gallery | Tech Fusion Club SRMU" },
-      { name: "twitter:description", content: "Photos from Tech Fusion Club (TFC) workshops and the Viveka fest." },
+      {
+        name: "twitter:description",
+        content: "Photos from Tech Fusion Club (TFC) workshops and the Viveka fest.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/gallery" }],
   }),
@@ -38,13 +45,13 @@ function Gallery() {
   const [index, setIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    getGalleryPhotos().then(data => {
+    getGalleryPhotos().then((data) => {
       setAllPhotos(data);
       setLoading(false);
     });
   }, []);
 
-  const years = Array.from(new Set(allPhotos.map(p => p.year))).sort((a, b) => b - a);
+  const years = Array.from(new Set(allPhotos.map((p) => p.year))).sort((a, b) => b - a);
   const photos = year === "all" ? allPhotos : allPhotos.filter((p) => p.year === year);
   const items = photos.map((p) => ({ src: p.src, alt: p.alt, caption: `${p.event} · ${p.year}` }));
 
@@ -109,7 +116,12 @@ function Gallery() {
         )}
       </Section>
 
-      <Lightbox items={items} index={index} onClose={() => setIndex(null)} onIndexChange={setIndex} />
+      <Lightbox
+        items={items}
+        index={index}
+        onClose={() => setIndex(null)}
+        onIndexChange={setIndex}
+      />
     </>
   );
 }

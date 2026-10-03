@@ -1,7 +1,5 @@
 export type EventCategory = "Workshop" | "Hackathon" | "Seminar" | "Competition";
 
-
-
 export type ClubEvent = {
   slug: string;
   title: string;
@@ -25,12 +23,7 @@ export type ClubEvent = {
 
 export const events: ClubEvent[] = [];
 
-export const eventCategories: EventCategory[] = [
-  "Workshop",
-  "Hackathon",
-  "Seminar",
-  "Competition",
-];
+export const eventCategories: EventCategory[] = ["Workshop", "Hackathon", "Seminar", "Competition"];
 
 export const eventYears = Array.from(new Set(events.map((e) => e.year))).sort((a, b) => b - a);
 
@@ -46,7 +39,8 @@ export function formatEventDate(event: Pick<ClubEvent, "date" | "endDate">) {
   const start = new Date(event.date);
   if (!event.endDate) return start.toLocaleDateString("en-GB", opts);
   const end = new Date(event.endDate);
-  const sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
+  const sameMonth =
+    start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
   return sameMonth
     ? `${start.getDate()}–${end.toLocaleDateString("en-GB", opts)}`
     : `${start.toLocaleDateString("en-GB", opts)} – ${end.toLocaleDateString("en-GB", opts)}`;

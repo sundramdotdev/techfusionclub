@@ -8,9 +8,7 @@ import { CalendarDays, ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/announcements")({
   head: () => ({
-    meta: [
-      { title: "Announcements | Tech Fusion Club (TFC) SRMU" },
-    ]
+    meta: [{ title: "Announcements | Tech Fusion Club (TFC) SRMU" }],
   }),
   component: Announcements,
 });
@@ -20,8 +18,8 @@ function Announcements() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAnnouncements().then(data => {
-      setAnnouncements(data.filter(a => a.published));
+    getAnnouncements().then((data) => {
+      setAnnouncements(data.filter((a) => a.published));
       setLoading(false);
     });
   }, []);
@@ -34,7 +32,8 @@ function Announcements() {
           Latest updates & news.
         </h1>
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-          Stay informed about the latest happenings, results, and official notices from Tech Fusion Club.
+          Stay informed about the latest happenings, results, and official notices from Tech Fusion
+          Club.
         </p>
       </Reveal>
 
@@ -54,19 +53,28 @@ function Announcements() {
                   </div>
                   <h2 className="font-display text-2xl font-bold mb-3">{a.title}</h2>
                   <p className="text-muted-foreground leading-relaxed mb-6">{a.summary}</p>
-                  
+
                   {a.content && (
                     <div className="text-foreground leading-relaxed space-y-4 mb-6 pt-6 border-t border-border/60">
                       {a.content}
                     </div>
                   )}
-                  
+
                   {a.image && (
-                    <img src={a.image} alt={a.title} className="w-full h-auto rounded-xl object-cover mb-6 border border-border" />
+                    <img
+                      src={a.image}
+                      alt={a.title}
+                      className="w-full h-auto rounded-xl object-cover mb-6 border border-border"
+                    />
                   )}
-                  
+
                   {a.link && (
-                    <a href={a.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-primary-glow hover:text-foreground transition-colors">
+                    <a
+                      href={a.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-semibold text-primary-glow hover:text-foreground transition-colors"
+                    >
                       Read more <ExternalLink className="size-4" />
                     </a>
                   )}

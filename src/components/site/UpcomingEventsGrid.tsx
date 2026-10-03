@@ -15,8 +15,8 @@ export function UpcomingEventsGrid() {
   const [upcoming, setUpcoming] = useState<ClubEvent[]>([]);
 
   useEffect(() => {
-    getEvents().then(events => {
-      setUpcoming(events.filter(e => e.status === "upcoming").slice(0, 3));
+    getEvents().then((events) => {
+      setUpcoming(events.filter((e) => e.status === "upcoming").slice(0, 3));
     });
   }, []);
 

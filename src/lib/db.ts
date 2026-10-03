@@ -1,8 +1,16 @@
 import { db } from "./firebase";
-import { 
-  collection, doc, getDocs, getDoc, 
-  addDoc, updateDoc, deleteDoc, query, 
-  where, orderBy, setDoc 
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
+  setDoc,
 } from "firebase/firestore";
 import type { ClubEvent } from "@/data/events";
 import type { Member, MemberTier } from "@/data/members";
@@ -77,7 +85,7 @@ async function moveToTrash(collectionName: string, id: string) {
       originalId: id,
       deletedAt: Date.now(),
       expiresAt: Date.now() + TRASH_EXPIRY_MS,
-      data: data
+      data: data,
     });
   }
 }
@@ -96,9 +104,9 @@ export const getTrashItems = async (): Promise<TrashItem[]> => {
     const snapshot = await getDocs(collection(db, TRASH_COLLECTION));
     const now = Date.now();
     const items: TrashItem[] = [];
-    
+
     for (const d of snapshot.docs) {
-      const data = d.data() as Omit<TrashItem, 'id'>;
+      const data = d.data() as Omit<TrashItem, "id">;
       // Auto-delete if expired
       if (now > data.expiresAt) {
         await deleteDoc(doc(db, TRASH_COLLECTION, d.id));
@@ -106,7 +114,7 @@ export const getTrashItems = async (): Promise<TrashItem[]> => {
         items.push({ id: d.id, ...data });
       }
     }
-    
+
     // Sort by deletedAt descending
     return items.sort((a, b) => b.deletedAt - a.deletedAt);
   } catch (error) {
@@ -119,14 +127,14 @@ export const restoreTrashItem = async (trashId: string) => {
   const trashRef = doc(db, TRASH_COLLECTION, trashId);
   const snapshot = await getDoc(trashRef);
   if (!snapshot.exists()) return false;
-  
+
   const { originalCollection, originalId, data } = snapshot.data();
   // Restore to original collection
   await updateDoc(doc(db, originalCollection, originalId), data).catch(async () => {
     // If it doesn't exist, use setDoc
     await setDoc(doc(db, originalCollection, originalId), data);
   });
-  
+
   // Remove from trash
   await deleteDoc(trashRef);
   clearCache(originalCollection);
@@ -149,11 +157,11 @@ export const getEvents = async (includeDrafts = false): Promise<(ClubEvent & { i
 
   try {
     const snapshot = await getDocs(collection(db, EVENTS_COLLECTION));
-    const events = snapshot.docs.map(doc => ({
+    const events = snapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
     })) as (ClubEvent & { id: string })[];
-    const result = includeDrafts ? events : events.filter(e => e.status !== "draft");
+    const result = includeDrafts ? events : events.filter((e) => e.status !== "draft");
     setCache(cacheKey, result);
     return result;
   } catch (error) {
@@ -162,12 +170,15 @@ export const getEvents = async (includeDrafts = false): Promise<(ClubEvent & { i
   }
 };
 
-export const getEventBySlug = async (slug: string): Promise<(ClubEvent & { id: string }) | null> => {
+export const getEventBySlug = async (
+  slug: string,
+): Promise<(ClubEvent & { id: string }) | null> => {
   // Try to find in the cached events first (saves a read!)
-  const allEvents = getCached<(ClubEvent & { id: string })[]>("events:all")
-    || getCached<(ClubEvent & { id: string })[]>("events:published");
+  const allEvents =
+    getCached<(ClubEvent & { id: string })[]>("events:all") ||
+    getCached<(ClubEvent & { id: string })[]>("events:published");
   if (allEvents) {
-    const found = allEvents.find(e => e.slug === slug);
+    const found = allEvents.find((e) => e.slug === slug);
     if (found) return found;
   }
 
@@ -176,7 +187,7 @@ export const getEventBySlug = async (slug: string): Promise<(ClubEvent & { id: s
     const snapshot = await getDocs(q);
     const doc = snapshot.docs[0];
     if (!doc) return null;
-    return { id: doc.id, ...doc.data() } as (ClubEvent & { id: string });
+    return { id: doc.id, ...doc.data() } as ClubEvent & { id: string };
   } catch (error) {
     console.warn("Error fetching event:", error);
     return null;
@@ -213,7 +224,9 @@ export const getMembers = async (): Promise<(Member & { id: string })[]> => {
 
   try {
     const snapshot = await getDocs(collection(db, MEMBERS_COLLECTION));
-    const result = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Member & { id: string })[];
+    const result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (Member & {
+      id: string;
+    })[];
     setCache(cacheKey, result);
     return result;
   } catch (error) {
@@ -224,7 +237,7 @@ export const getMembers = async (): Promise<(Member & { id: string })[]> => {
 
 export const getMembersByTier = async (tier: MemberTier): Promise<(Member & { id: string })[]> => {
   const members = await getMembers();
-  return members.filter(m => m.tier === tier);
+  return members.filter((m) => m.tier === tier);
 };
 
 export const createMember = async (data: Partial<Member>) => {
@@ -257,7 +270,9 @@ export const getAlumni = async (): Promise<(Alumnus & { id: string })[]> => {
 
   try {
     const snapshot = await getDocs(collection(db, ALUMNI_COLLECTION));
-    const result = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Alumnus & { id: string })[];
+    const result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (Alumnus & {
+      id: string;
+    })[];
     setCache(cacheKey, result);
     return result;
   } catch (error) {
@@ -296,7 +311,9 @@ export const getGalleryPhotos = async (): Promise<(GalleryPhoto & { id: string }
 
   try {
     const snapshot = await getDocs(collection(db, GALLERY_COLLECTION));
-    const result = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (GalleryPhoto & { id: string })[];
+    const result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (GalleryPhoto & {
+      id: string;
+    })[];
     setCache(cacheKey, result);
     return result;
   } catch (error) {
@@ -329,7 +346,9 @@ export const getAnnouncements = async (): Promise<(Announcement & { id: string }
 
   try {
     const snapshot = await getDocs(collection(db, ANNOUNCEMENTS_COLLECTION));
-    const result = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Announcement & { id: string })[];
+    const result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (Announcement & {
+      id: string;
+    })[];
     setCache(cacheKey, result);
     return result;
   } catch (error) {
@@ -364,11 +383,9 @@ export const deleteAnnouncement = async (id: string) => {
 export const getRegistrations = async (eventSlug?: string) => {
   try {
     const ref = collection(db, REGISTRATIONS_COLLECTION);
-    const q = eventSlug 
-      ? query(ref, where("eventSlug", "==", eventSlug))
-      : ref;
+    const q = eventSlug ? query(ref, where("eventSlug", "==", eventSlug)) : ref;
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.warn("Error fetching registrations:", error);
     return [];
@@ -378,7 +395,7 @@ export const getRegistrations = async (eventSlug?: string) => {
 export const createRegistration = async (data: Record<string, unknown>) => {
   const docRef = await addDoc(collection(db, REGISTRATIONS_COLLECTION), {
     ...data,
-    submittedAt: new Date().toISOString()
+    submittedAt: new Date().toISOString(),
   });
   return docRef.id;
 };

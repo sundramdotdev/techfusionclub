@@ -36,7 +36,6 @@ import { UpcomingEventsGrid } from "@/components/site/UpcomingEventsGrid";
 import { VideoHero } from "@/components/site/VideoHero";
 import { DomainShowcase } from "@/components/site/DomainShowcase";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -75,10 +74,10 @@ function Home() {
   const [featuredEvent, setFeaturedEvent] = useState<ClubEvent | null>(null);
 
   useEffect(() => {
-    getGalleryPhotos().then(data => setPreviewPhotos(data.slice(0, 6)));
-    getEvents().then(events => {
+    getGalleryPhotos().then((data) => setPreviewPhotos(data.slice(0, 6)));
+    getEvents().then((events) => {
       // Pick the first upcoming event, or the first event overall
-      const upcoming = events.find(e => e.status === "upcoming");
+      const upcoming = events.find((e) => e.status === "upcoming");
       setFeaturedEvent(upcoming || events[0] || null);
     });
   }, []);
@@ -98,15 +97,15 @@ function Home() {
 
           {/* Giant Display Title */}
           <h1 className="mt-6 text-balance font-display text-4xl font-bold leading-[1.08] tracking-tight animate-rise [animation-delay:100ms] sm:text-5xl lg:text-6xl xl:text-7xl">
-            Where ideas{" "}
-            <span className="text-gradient">fuse</span>
+            Where ideas <span className="text-gradient">fuse</span>
             <br className="hidden sm:block" /> into technology.
           </h1>
 
           {/* Subtitle */}
           <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground animate-rise [animation-delay:200ms] sm:text-lg">
             {club.name} is the student-run technical collective at SRMU. Six domains, one calendar
-            of workshops and hackathons, and a mentorship ladder running unbroken since {club.foundedYear}.
+            of workshops and hackathons, and a mentorship ladder running unbroken since{" "}
+            {club.foundedYear}.
           </p>
 
           {/* CTAs */}
@@ -118,12 +117,9 @@ function Home() {
               Explore events
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-
           </div>
         </div>
       </VideoHero>
-
-
 
       {/* ═══════════════════ 3. MARQUEE TICKER ═══════════════════ */}
       <div className="mt-12">
@@ -198,7 +194,8 @@ function Home() {
               </p>
               <ul className="mt-7 space-y-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
                 <li className="flex items-center gap-2">
-                  <CalendarDays className="size-3.5 text-primary-glow" /> {formatEventDate(featuredEvent)}
+                  <CalendarDays className="size-3.5 text-primary-glow" />{" "}
+                  {formatEventDate(featuredEvent)}
                 </li>
                 <li className="flex items-center gap-2">
                   <MapPin className="size-3.5 text-primary-glow" /> {featuredEvent.venue}
@@ -273,8 +270,6 @@ function Home() {
           </Reveal>
         </div>
       </Section>
-
-
 
       {/* ═══════════════════ 10. CORE VALUES ═══════════════════ */}
       <Section>
@@ -423,7 +418,9 @@ function Home() {
           </Reveal>
         ) : (
           <Reveal className="mt-10 glass rounded-2xl p-8 text-center border border-border">
-            <p className="text-muted-foreground">Photos will appear here once added by the admin.</p>
+            <p className="text-muted-foreground">
+              Photos will appear here once added by the admin.
+            </p>
           </Reveal>
         )}
       </Section>

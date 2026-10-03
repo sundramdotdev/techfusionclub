@@ -21,7 +21,7 @@ export function EventCard({
       ref={glowRef}
       role="button"
       tabIndex={0}
-      onKeyDown={e => e.key === "Enter" && onClick?.()}
+      onKeyDown={(e) => e.key === "Enter" && onClick?.()}
       className="glass lift cursor-glow group relative overflow-hidden rounded-3xl block text-left w-full outline-none"
     >
       <div className="relative z-10 block outline-none">

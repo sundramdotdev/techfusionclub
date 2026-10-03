@@ -14,22 +14,26 @@ export const Route = createFileRoute("/alumni")({
       { title: "Alumni Network | Tech Fusion Club (TFC) SRMU" },
       {
         name: "description",
-        content: "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders, members, and tech professionals who built Viveka and the club's legacy alongside Praveen Singh (webdevpraveen).",
+        content:
+          "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders, members, and tech professionals who built Viveka and the club's legacy alongside Praveen Singh (webdevpraveen).",
       },
       {
         name: "keywords",
-        content: "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tfc alumni, srmu alumni",
+        content:
+          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tfc alumni, srmu alumni",
       },
       { property: "og:title", content: "Alumni Network | Tech Fusion Club (TFC) SRMU" },
       {
         property: "og:description",
-        content: "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders who built Viveka.",
+        content:
+          "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders who built Viveka.",
       },
       { property: "og:url", content: "https://techfusionclub.vercel.app/alumni" },
       { name: "twitter:title", content: "Alumni | Tech Fusion Club SRMU" },
       {
         name: "twitter:description",
-        content: "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders who built Viveka.",
+        content:
+          "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders who built Viveka.",
       },
     ],
     links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/alumni" }],
@@ -56,9 +60,7 @@ function AlumniCard({ alumnus, index }: { alumnus: Alumnus; index: number }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-80" />
         <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
           <div>
-            <h3 className="font-display text-xl font-bold text-foreground">
-              {alumnus.name}
-            </h3>
+            <h3 className="font-display text-xl font-bold text-foreground">{alumnus.name}</h3>
             <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-primary-glow">
               {alumnus.post}
             </p>
@@ -110,7 +112,7 @@ function Alumni() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAlumni().then(data => {
+    getAlumni().then((data) => {
       setAlumniList(data);
       setLoading(false);
     });
@@ -125,7 +127,8 @@ function Alumni() {
             The foundation we stand on.
           </h1>
           <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-            Meet the past members who paved the way. From general secretaries to core members, these are the individuals who shaped Tech Fusion Club.
+            Meet the past members who paved the way. From general secretaries to core members, these
+            are the individuals who shaped Tech Fusion Club.
           </p>
         </Reveal>
       </Section>

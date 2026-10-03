@@ -11,12 +11,7 @@ interface MarqueeStripProps {
  * Infinite scrolling marquee strip — SRMU-style ticker.
  * Pure CSS animation, no JS runtime, duplicates children for seamless loop.
  */
-export function MarqueeStrip({
-  items,
-  speed = 35,
-  className,
-  reverse = false,
-}: MarqueeStripProps) {
+export function MarqueeStrip({ items, speed = 35, className, reverse = false }: MarqueeStripProps) {
   const content = items.map((item, i) => (
     <span
       key={i}
@@ -39,10 +34,7 @@ export function MarqueeStrip({
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-background to-transparent" />
 
       <div
-        className={cn(
-          "flex w-max",
-          reverse ? "animate-marquee-reverse" : "animate-marquee",
-        )}
+        className={cn("flex w-max", reverse ? "animate-marquee-reverse" : "animate-marquee")}
         style={{ animationDuration: `${speed}s` }}
       >
         {content}

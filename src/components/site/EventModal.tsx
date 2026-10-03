@@ -1,15 +1,27 @@
 import { useState } from "react";
-import { X, CalendarDays, MapPin, Users, Award, ExternalLink, CheckCircle2, ArrowRight, ArrowLeft, Loader2, AlertCircle } from "lucide-react";
+import {
+  X,
+  CalendarDays,
+  MapPin,
+  Users,
+  Award,
+  ExternalLink,
+  CheckCircle2,
+  ArrowRight,
+  ArrowLeft,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
 import type { ClubEvent } from "@/data/events";
 import { formatEventDate } from "@/data/events";
 
 interface EventModalProps {
-  event: ClubEvent & { id?: string } | null;
+  event: (ClubEvent & { id?: string }) | null;
   onClose: () => void;
 }
 
 export function EventModal({ event, onClose }: EventModalProps) {
-  const [mode, setMode] = useState<'details' | 'register'>('details');
+  const [mode, setMode] = useState<"details" | "register">("details");
 
   if (!event) return null;
 
@@ -17,7 +29,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
     onClose();
     // Reset state slightly after close animation
     setTimeout(() => {
-      setMode('details');
+      setMode("details");
     }, 300);
   };
 
@@ -36,7 +48,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
           <X className="size-5" />
         </button>
 
-        {mode === 'details' && (
+        {mode === "details" && (
           <div className="animate-in slide-in-from-left-4 fade-in duration-300">
             {/* Cover Image */}
             <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl mb-6">
@@ -95,7 +107,10 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 </h4>
                 <ul className="space-y-2">
                   {event.highlights.map((h, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/90 font-mono">
+                    <li
+                      key={idx}
+                      className="flex items-start gap-2 text-xs sm:text-sm text-foreground/90 font-mono"
+                    >
                       <CheckCircle2 className="size-4 text-emerald-400 shrink-0 mt-0.5" />
                       <span>{h}</span>
                     </li>
@@ -113,7 +128,9 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {event.winners.map((w) => (
                     <div key={w.position} className="glass p-3 rounded-xl">
-                      <span className="font-mono text-xs text-amber-400 font-bold">{w.position} Place</span>
+                      <span className="font-mono text-xs text-amber-400 font-bold">
+                        {w.position} Place
+                      </span>
                       <p className="font-bold text-sm text-foreground mt-0.5">{w.name}</p>
                       <p className="text-xs text-muted-foreground font-mono">{w.project}</p>
                     </div>
@@ -138,7 +155,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
               {event.status === "upcoming" ? (
                 event.googleFormUrl ? (
                   <button
-                    onClick={() => setMode('register')}
+                    onClick={() => setMode("register")}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
                   >
                     Register Now <ArrowRight className="size-4" />
@@ -153,12 +170,18 @@ export function EventModal({ event, onClose }: EventModalProps) {
                     Register Now <ExternalLink className="size-4" />
                   </a>
                 ) : (
-                  <button disabled className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed">
+                  <button
+                    disabled
+                    className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed"
+                  >
                     Opening Soon
                   </button>
                 )
               ) : (
-                <button disabled className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed">
+                <button
+                  disabled
+                  className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed"
+                >
                   Registration Closed
                 </button>
               )}
@@ -166,19 +189,26 @@ export function EventModal({ event, onClose }: EventModalProps) {
           </div>
         )}
 
-        {mode === 'register' && event.googleFormUrl && (
+        {mode === "register" && event.googleFormUrl && (
           <div className="animate-in slide-in-from-right-4 fade-in duration-300">
             <div className="flex items-center mb-6">
               <button
-                onClick={() => setMode('details')}
+                onClick={() => setMode("details")}
                 className="inline-flex items-center text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors bg-surface-strong px-3 py-1.5 rounded-full"
               >
                 <ArrowLeft className="mr-2 size-3.5" /> Back to details
               </button>
             </div>
-            <div className="w-full rounded-xl overflow-hidden bg-white shadow-inner relative" style={{ height: '70vh', minHeight: '500px' }}>
+            <div
+              className="w-full rounded-xl overflow-hidden bg-white shadow-inner relative"
+              style={{ height: "70vh", minHeight: "500px" }}
+            >
               <iframe
-                src={event.googleFormUrl.includes('?') ? event.googleFormUrl + '&embedded=true' : event.googleFormUrl + '?embedded=true'}
+                src={
+                  event.googleFormUrl.includes("?")
+                    ? event.googleFormUrl + "&embedded=true"
+                    : event.googleFormUrl + "?embedded=true"
+                }
                 width="100%"
                 height="100%"
                 frameBorder="0"

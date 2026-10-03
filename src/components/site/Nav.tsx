@@ -4,7 +4,7 @@ import { Menu, X, Sun, Moon, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 
-type NavLink = { to: any, label: string } | { href: string, label: string, external: true };
+type NavLink = { to: any; label: string } | { href: string; label: string; external: true };
 
 const links: NavLink[] = [
   { to: "/", label: "Home" },
@@ -89,9 +89,6 @@ export function Nav() {
         </ul>
 
         <div className="flex items-center gap-2 sm:gap-3">
-
-
-
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -138,7 +135,6 @@ export function Nav() {
             </li>
           ))}
         </ul>
-
       </div>
     </header>
   );
