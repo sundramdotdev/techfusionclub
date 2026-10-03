@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { alumniList } from "@/data/alumni";
+import { useState, useEffect } from "react";
+import { getAlumni } from "@/lib/db";
 import type { Alumnus } from "@/data/alumni";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
@@ -75,7 +76,7 @@ function AlumniCard({ alumnus, index }: { alumnus: Alumnus; index: number }) {
         </ul>
         {alumnus.socials && (
           <div className="mt-6 flex items-center gap-3">
-            {alumnus.socials.linkedin && (
+            {alumnus.socials.linkedin && alumnus.socials.linkedin !== "#" && (
               <a
                 href={alumnus.socials.linkedin}
                 target="_blank"
@@ -86,7 +87,7 @@ function AlumniCard({ alumnus, index }: { alumnus: Alumnus; index: number }) {
                 <span className="sr-only">LinkedIn</span>
               </a>
             )}
-            {alumnus.socials.github && (
+            {alumnus.socials.github && alumnus.socials.github !== "#" && (
               <a
                 href={alumnus.socials.github}
                 target="_blank"
@@ -105,6 +106,16 @@ function AlumniCard({ alumnus, index }: { alumnus: Alumnus; index: number }) {
 }
 
 function Alumni() {
+  const [alumniList, setAlumniList] = useState<Alumnus[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getAlumni().then(data => {
+      setAlumniList(data);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <>
       <Section className="pb-8">
@@ -120,15 +131,28 @@ function Alumni() {
       </Section>
 
       <Section className="py-10 sm:py-12">
-        <ul className="mt-8 grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {alumniList.map((member, i) => (
-            <li key={member.id}>
-              <Reveal delay={(i % 4) * 50}>
-                <AlumniCard alumnus={member} index={i} />
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <div className="flex h-[300px] items-center justify-center">
+            <p className="text-muted-foreground animate-pulse">Loading alumni...</p>
+          </div>
+        ) : alumniList.length > 0 ? (
+          <ul className="mt-8 grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {alumniList.map((member, i) => (
+              <li key={member.id}>
+                <Reveal delay={(i % 4) * 50}>
+                  <AlumniCard alumnus={member} index={i} />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Reveal className="glass hero-gradient rounded-[2rem] p-12 text-center border border-border">
+            <h2 className="font-display text-2xl font-bold mb-2">Alumni network coming soon</h2>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              Past members and leaders will be listed here once added by the admin team.
+            </p>
+          </Reveal>
+        )}
       </Section>
 
       <CTABanner
