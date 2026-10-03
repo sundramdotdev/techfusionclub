@@ -172,172 +172,172 @@ function Nav() {
     ),
     children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-      "aria-label": "Primary",
-      className:
-        "mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:h-20 sm:px-8",
-      children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-        to: "/",
-        className: "group flex items-center gap-3",
-        onClick: () => setOpen(false),
+        "aria-label": "Primary",
+        className:
+          "mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:h-20 sm:px-8",
         children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+            to: "/",
+            className: "group flex items-center gap-3",
+            onClick: () => setOpen(false),
+            children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Logo, {
-          className:
-            "h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105",
-        }),
+                className:
+                  "h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105",
+              }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-          className: "flex flex-col",
-          children: [
+                className: "flex flex-col",
+                children: [
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-            className:
-              "font-display text-xl font-extrabold tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-foreground via-primary-glow to-accent drop-shadow-[0_0_12px_rgba(217,72,15,0.4)] sm:text-2xl",
-            children: "TECH FUSION",
-          }),
+                    className:
+                      "font-display text-xl font-extrabold tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-foreground via-primary-glow to-accent drop-shadow-[0_0_12px_rgba(217,72,15,0.4)] sm:text-2xl",
+                    children: "TECH FUSION",
+                  }),
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-            className:
-              "font-mono text-[9px] uppercase tracking-[0.35em] text-primary-glow font-bold -mt-1",
-            children: "CLUB",
+                    className:
+                      "font-mono text-[9px] uppercase tracking-[0.35em] text-primary-glow font-bold -mt-1",
+                    children: "CLUB",
+                  }),
+                ],
+              }),
+            ],
           }),
-          ],
-        }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+            className: "hidden items-center gap-1 lg:flex",
+            children: links.map((link) =>
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "li",
+                {
+                  children:
+                    "external" in link && link.external
+                      ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+                          href: link.href,
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                          className:
+                            "electric-link inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold text-primary-glow transition-colors hover:text-foreground xl:px-4",
+                          children: [
+                            link.label,
+                            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
+                              className: "size-3",
+                            }),
+                          ],
+                        })
+                      : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+                          to: "to" in link ? link.to : "/",
+                          activeOptions: { exact: ("to" in link ? link.to : "/") === "/" },
+                          activeProps: { className: "text-foreground font-semibold" },
+                          className:
+                            "electric-link rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground xl:px-4",
+                          children: link.label,
+                        }),
+                },
+                "to" in link ? link.to : link.href,
+              ),
+            ),
+          }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+            className: "flex items-center gap-2 sm:gap-3",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+                type: "button",
+                onClick: toggleTheme,
+                "aria-label": `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
+                title: `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
+                className:
+                  "glass hover:bg-surface-strong relative inline-flex size-10 items-center justify-center rounded-full text-foreground transition-transform duration-300 hover:scale-110 border border-border",
+                children:
+                  theme === "dark"
+                    ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Sun, {
+                        className: "size-5 text-amber-400 transition-all duration-300",
+                      })
+                    : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Moon, {
+                        className: "size-5 text-indigo-600 transition-all duration-300",
+                      }),
+              }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+                to: "/join",
+                className:
+                  "group pulse-glow relative hidden overflow-hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03] sm:inline-flex",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+                    className: "relative z-10",
+                    children: "Join the Club",
+                  }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+                    className:
+                      "pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-primary-foreground/25 opacity-0 group-hover:animate-sheen group-hover:opacity-100",
+                  }),
+                ],
+              }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+                type: "button",
+                onClick: () => setOpen((v) => !v),
+                "aria-expanded": open,
+                "aria-controls": "mobile-nav",
+                "aria-label": open ? "Close menu" : "Open menu",
+                className:
+                  "glass inline-flex size-10 items-center justify-center rounded-full text-foreground lg:hidden",
+                children: open
+                  ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "size-5" })
+                  : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Menu, { className: "size-5" }),
+              }),
+            ],
+          }),
         ],
       }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-        className: "hidden items-center gap-1 lg:flex",
-        children: links.map((link) =>
-              /* @__PURE__ */(0, import_jsx_runtime.jsx)(
-          "li",
-          {
-            children:
-              "external" in link && link.external
-                ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-                  href: link.href,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  className:
-                    "electric-link inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold text-primary-glow transition-colors hover:text-foreground xl:px-4",
-                  children: [
-                    link.label,
-                            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
-                      className: "size-3",
-                    }),
-                  ],
-                })
-                : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-                  to: "to" in link ? link.to : "/",
-                  activeOptions: { exact: ("to" in link ? link.to : "/") === "/" },
-                  activeProps: { className: "text-foreground font-semibold" },
-                  className:
-                    "electric-link rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground xl:px-4",
-                  children: link.label,
-                }),
-          },
-          "to" in link ? link.to : link.href,
-        ),
-        ),
-      }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-        className: "flex items-center gap-2 sm:gap-3",
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+        id: "mobile-nav",
+        hidden: !open,
+        className: "glass-strong border-t px-5 pb-8 pt-4 lg:hidden",
         children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-          type: "button",
-          onClick: toggleTheme,
-          "aria-label": `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
-          title: `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
-          className:
-            "glass hover:bg-surface-strong relative inline-flex size-10 items-center justify-center rounded-full text-foreground transition-transform duration-300 hover:scale-110 border border-border",
-          children:
-            theme === "dark"
-              ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Sun, {
-                className: "size-5 text-amber-400 transition-all duration-300",
-              })
-              : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Moon, {
-                className: "size-5 text-indigo-600 transition-all duration-300",
-              }),
-        }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-          to: "/join",
-          className:
-            "group pulse-glow relative hidden overflow-hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03] sm:inline-flex",
-          children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-            className: "relative z-10",
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+            className: "flex flex-col",
+            children: links.map((link) =>
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "li",
+                {
+                  children:
+                    "external" in link && link.external
+                      ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+                          href: link.href,
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                          onClick: () => setOpen(false),
+                          className:
+                            "flex items-center justify-between border-b border-border/60 py-3.5 font-display text-lg font-semibold text-primary-glow",
+                          children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+                              children: link.label,
+                            }),
+                            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
+                              className: "size-4",
+                            }),
+                          ],
+                        })
+                      : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+                          to: "to" in link ? link.to : "/",
+                          onClick: () => setOpen(false),
+                          activeOptions: { exact: ("to" in link ? link.to : "/") === "/" },
+                          activeProps: { className: "text-primary-glow" },
+                          className:
+                            "block border-b border-border/60 py-3.5 font-display text-lg font-semibold text-muted-foreground",
+                          children: link.label,
+                        }),
+                },
+                "to" in link ? link.to : link.href,
+              ),
+            ),
+          }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+            to: "/join",
+            onClick: () => setOpen(false),
+            className:
+              "mt-6 block rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground",
             children: "Join the Club",
           }),
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-            className:
-              "pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-primary-foreground/25 opacity-0 group-hover:animate-sheen group-hover:opacity-100",
-          }),
-          ],
-        }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-          type: "button",
-          onClick: () => setOpen((v) => !v),
-          "aria-expanded": open,
-          "aria-controls": "mobile-nav",
-          "aria-label": open ? "Close menu" : "Open menu",
-          className:
-            "glass inline-flex size-10 items-center justify-center rounded-full text-foreground lg:hidden",
-          children: open
-            ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "size-5" })
-            : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Menu, { className: "size-5" }),
-        }),
         ],
       }),
-      ],
-    }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-      id: "mobile-nav",
-      hidden: !open,
-      className: "glass-strong border-t px-5 pb-8 pt-4 lg:hidden",
-      children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-        className: "flex flex-col",
-        children: links.map((link) =>
-              /* @__PURE__ */(0, import_jsx_runtime.jsx)(
-          "li",
-          {
-            children:
-              "external" in link && link.external
-                ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-                  href: link.href,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  onClick: () => setOpen(false),
-                  className:
-                    "flex items-center justify-between border-b border-border/60 py-3.5 font-display text-lg font-semibold text-primary-glow",
-                  children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-                    children: link.label,
-                  }),
-                            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
-                    className: "size-4",
-                  }),
-                  ],
-                })
-                : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-                  to: "to" in link ? link.to : "/",
-                  onClick: () => setOpen(false),
-                  activeOptions: { exact: ("to" in link ? link.to : "/") === "/" },
-                  activeProps: { className: "text-primary-glow" },
-                  className:
-                    "block border-b border-border/60 py-3.5 font-display text-lg font-semibold text-muted-foreground",
-                  children: link.label,
-                }),
-          },
-          "to" in link ? link.to : link.href,
-        ),
-        ),
-      }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-        to: "/join",
-        onClick: () => setOpen(false),
-        className:
-          "mt-6 block rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground",
-        children: "Join the Club",
-      }),
-      ],
-    }),
     ],
   });
 }
@@ -555,166 +555,166 @@ function Footer() {
       className: "mx-auto w-full max-w-7xl",
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-        className: "grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]",
-        children: [
+          className: "grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]",
+          children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-          children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-            to: "/",
-            className: "group flex items-center gap-3",
-            children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Logo, {
-              className: "h-10 sm:h-12 w-auto",
-            }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-              className: "flex flex-col",
               children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-                className:
-                  "font-display text-base font-extrabold tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-foreground via-primary-glow to-accent drop-shadow-[0_0_10px_rgba(217,72,15,0.4)]",
-                children: "TECH FUSION",
-              }),
-                        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-                className:
-                  "font-mono text-[8px] uppercase tracking-[0.3em] text-primary-glow font-bold -mt-0.5",
-                children: "CLUB",
-              }),
-              ],
-            }),
-            ],
-          }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-            className: "mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground",
-            children: [
-              club.tagline,
-              " A student-led technical club at ",
-              club.university,
-              ", active since",
-              " ",
-              club.foundedYear,
-              ".",
-            ],
-          }),
-          ],
-        }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-          "aria-label": "Footer quick links",
-          children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-            className: "font-mono text-[11px] uppercase tracking-[0.2em] text-foreground",
-            children: "Explore",
-          }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-            className: "mt-4 space-y-3 text-sm text-muted-foreground",
-            children: quickLinks.map((l) =>
-                    /* @__PURE__ */(0, import_jsx_runtime.jsx)(
-              "li",
-              {
-                children:
-                  "external" in l && l.external
-                    ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-                      href: l.href,
-                      target: "_blank",
-                      rel: "noopener noreferrer",
-                      className:
-                        "inline-flex items-center gap-1 transition-colors hover:text-primary-glow text-primary-glow font-semibold",
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+                  to: "/",
+                  className: "group flex items-center gap-3",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Logo, {
+                      className: "h-10 sm:h-12 w-auto",
+                    }),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+                      className: "flex flex-col",
                       children: [
-                        l.label,
-                                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
-                          className: "size-3",
+                        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+                          className:
+                            "font-display text-base font-extrabold tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-foreground via-primary-glow to-accent drop-shadow-[0_0_10px_rgba(217,72,15,0.4)]",
+                          children: "TECH FUSION",
+                        }),
+                        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+                          className:
+                            "font-mono text-[8px] uppercase tracking-[0.3em] text-primary-glow font-bold -mt-0.5",
+                          children: "CLUB",
                         }),
                       ],
-                    })
-                    : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-                      to: "to" in l ? l.to : "/",
-                      className: "transition-colors hover:text-primary-glow",
-                      children: l.label,
                     }),
-              },
-              "to" in l ? l.to : l.href,
-            ),
-            ),
-          }),
-          ],
-        }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-          "aria-label": "Footer secondary links",
-          children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-            className: "font-mono text-[11px] uppercase tracking-[0.2em] text-foreground",
-            children: "More",
-          }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-            className: "mt-4 space-y-3 text-sm text-muted-foreground",
-            children: moreLinks.map((l) =>
-                    /* @__PURE__ */(0, import_jsx_runtime.jsx)(
-              "li",
-              {
-                children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-                  to: l.to,
-                  className: "transition-colors hover:text-primary-glow",
-                  children: l.label,
+                  ],
                 }),
-              },
-              l.to,
-            ),
-            ),
-          }),
-          ],
-        }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-          children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-            className: "font-mono text-[11px] uppercase tracking-[0.2em] text-foreground",
-            children: "Get in touch",
-          }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-            href: `mailto:${club.email}`,
-            className:
-              "mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary-glow",
-            children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
-              className: "size-4 shrink-0",
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+                  className: "mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground",
+                  children: [
+                    club.tagline,
+                    " A student-led technical club at ",
+                    club.university,
+                    ", active since",
+                    " ",
+                    club.foundedYear,
+                    ".",
+                  ],
+                }),
+              ],
             }),
-              club.email,
-            ],
-          }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-            className: "mt-6 flex flex-wrap gap-2",
-            children: club.socials.map((s) =>
-                    /* @__PURE__ */(0, import_jsx_runtime.jsx)(
-              "li",
-              {
-                children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-                  href: s.href,
-                  target: "_blank",
-                  rel: "noreferrer noopener",
-                  className:
-                    "glass inline-flex rounded-full px-3.5 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-primary-glow",
-                  children: s.label,
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
+              "aria-label": "Footer quick links",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+                  className: "font-mono text-[11px] uppercase tracking-[0.2em] text-foreground",
+                  children: "Explore",
                 }),
-              },
-              s.label,
-            ),
-            ),
-          }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+                  className: "mt-4 space-y-3 text-sm text-muted-foreground",
+                  children: quickLinks.map((l) =>
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "li",
+                      {
+                        children:
+                          "external" in l && l.external
+                            ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+                                href: l.href,
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                className:
+                                  "inline-flex items-center gap-1 transition-colors hover:text-primary-glow text-primary-glow font-semibold",
+                                children: [
+                                  l.label,
+                                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
+                                    className: "size-3",
+                                  }),
+                                ],
+                              })
+                            : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+                                to: "to" in l ? l.to : "/",
+                                className: "transition-colors hover:text-primary-glow",
+                                children: l.label,
+                              }),
+                      },
+                      "to" in l ? l.to : l.href,
+                    ),
+                  ),
+                }),
+              ],
+            }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
+              "aria-label": "Footer secondary links",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+                  className: "font-mono text-[11px] uppercase tracking-[0.2em] text-foreground",
+                  children: "More",
+                }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+                  className: "mt-4 space-y-3 text-sm text-muted-foreground",
+                  children: moreLinks.map((l) =>
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "li",
+                      {
+                        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+                          to: l.to,
+                          className: "transition-colors hover:text-primary-glow",
+                          children: l.label,
+                        }),
+                      },
+                      l.to,
+                    ),
+                  ),
+                }),
+              ],
+            }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+                  className: "font-mono text-[11px] uppercase tracking-[0.2em] text-foreground",
+                  children: "Get in touch",
+                }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+                  href: `mailto:${club.email}`,
+                  className:
+                    "mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary-glow",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
+                      className: "size-4 shrink-0",
+                    }),
+                    club.email,
+                  ],
+                }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+                  className: "mt-6 flex flex-wrap gap-2",
+                  children: club.socials.map((s) =>
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "li",
+                      {
+                        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+                          href: s.href,
+                          target: "_blank",
+                          rel: "noreferrer noopener",
+                          className:
+                            "glass inline-flex rounded-full px-3.5 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-primary-glow",
+                          children: s.label,
+                        }),
+                      },
+                      s.label,
+                    ),
+                  ),
+                }),
+              ],
+            }),
           ],
         }),
-        ],
-      }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "divider-glow mt-14" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-        className:
-          "flex flex-col gap-3 pt-6 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:flex-row sm:justify-between sm:text-left",
-        children: [
+          className:
+            "flex flex-col gap-3 pt-6 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:flex-row sm:justify-between sm:text-left",
+          children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-          children: ["© ", /* @__PURE__ */ new Date().getFullYear(), " ", club.name],
-        }),
+              children: ["© ", /* @__PURE__ */ new Date().getFullYear(), " ", club.name],
+            }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-          children: "Built by students, for students",
+              children: "Built by students, for students",
+            }),
+          ],
         }),
-        ],
-      }),
       ],
     }),
   });
@@ -726,26 +726,26 @@ function NotFoundComponent() {
       className: "max-w-md text-center",
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-        className: "text-7xl font-bold text-foreground",
-        children: "404",
-      }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-        className: "mt-4 text-xl font-semibold text-foreground",
-        children: "Page not found",
-      }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-        className: "mt-2 text-sm text-muted-foreground",
-        children: "The page you're looking for doesn't exist or has been moved.",
-      }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-        className: "mt-6",
-        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-          to: "/",
-          className:
-            "inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90",
-          children: "Go home",
+          className: "text-7xl font-bold text-foreground",
+          children: "404",
         }),
-      }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+          className: "mt-4 text-xl font-semibold text-foreground",
+          children: "Page not found",
+        }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+          className: "mt-2 text-sm text-muted-foreground",
+          children: "The page you're looking for doesn't exist or has been moved.",
+        }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+          className: "mt-6",
+          children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+            to: "/",
+            className:
+              "inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90",
+            children: "Go home",
+          }),
+        }),
       ],
     }),
   });
@@ -759,33 +759,33 @@ function ErrorComponent({ error, reset }) {
       className: "max-w-md text-center",
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-        className: "text-xl font-semibold tracking-tight text-foreground",
-        children: "This page didn't load",
-      }),
+          className: "text-xl font-semibold tracking-tight text-foreground",
+          children: "This page didn't load",
+        }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-        className: "mt-2 text-sm text-muted-foreground",
-        children: "Something went wrong on our end. You can try refreshing or head back home.",
-      }),
+          className: "mt-2 text-sm text-muted-foreground",
+          children: "Something went wrong on our end. You can try refreshing or head back home.",
+        }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-        className: "mt-6 flex flex-wrap justify-center gap-2",
-        children: [
+          className: "mt-6 flex flex-wrap justify-center gap-2",
+          children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-          onClick: () => {
-            router.invalidate();
-            reset();
-          },
-          className:
-            "inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90",
-          children: "Try again",
-        }),
+              onClick: () => {
+                router.invalidate();
+                reset();
+              },
+              className:
+                "inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90",
+              children: "Try again",
+            }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-          href: "/",
-          className:
-            "inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent",
-          children: "Go home",
+              href: "/",
+              className:
+                "inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent",
+              children: "Go home",
+            }),
+          ],
         }),
-        ],
-      }),
       ],
     }),
   });
@@ -912,35 +912,35 @@ function RootShell({ children }) {
     suppressHydrationWarning: true,
     children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("head", {
-      children: [
+        children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeadContent, {}),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("link", {
-        rel: "preload",
-        as: "style",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap",
-      }),
+            rel: "preload",
+            as: "style",
+            href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap",
+          }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("link", {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap",
-        media: "print",
-        onLoad: "this.media='all'",
-      }),
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap",
+            media: "print",
+            onLoad: "this.media='all'",
+          }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("noscript", {
-        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("link", {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap",
-        }),
-      }),
+            children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("link", {
+              rel: "stylesheet",
+              href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap",
+            }),
+          }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("script", {
-        dangerouslySetInnerHTML: {
-          __html: `(function(){try{var t=localStorage.getItem("tf-theme");if(t==="dark"||t==="light"){document.documentElement.className=t}else{document.documentElement.className="light"}}catch(e){document.documentElement.className="light"}})()`,
-        },
+            dangerouslySetInnerHTML: {
+              __html: `(function(){try{var t=localStorage.getItem("tf-theme");if(t==="dark"||t==="light"){document.documentElement.className=t}else{document.documentElement.className="light"}}catch(e){document.documentElement.className="light"}})()`,
+            },
+          }),
+        ],
       }),
-      ],
-    }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("body", {
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Scripts, {})],
-    }),
+        children: [children, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Scripts, {})],
+      }),
     ],
   });
 }
@@ -951,17 +951,17 @@ function RootComponent() {
       client: queryClient,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-        href: "#main",
-        className:
-          "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground",
-        children: "Skip to content",
-      }),
+          href: "#main",
+          className:
+            "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground",
+          children: "Skip to content",
+        }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Nav, {}),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", {
-        id: "main",
-        className: "pt-16 sm:pt-20",
-        children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {}),
-      }),
+          id: "main",
+          className: "pt-16 sm:pt-20",
+          children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {}),
+        }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Footer, {}),
       ],
     }),

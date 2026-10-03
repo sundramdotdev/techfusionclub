@@ -21,9 +21,9 @@ import { i as O, n as k, r as A, t as j } from "./Section-Bzy8-56x.js";
 import { t as M } from "./GlowCard-CKkiIY9F.js";
 import { t as N } from "./gallery-Dkh1h4rB.js";
 var P = y(`arrow-up-right`, [
-  [`path`, { d: `M7 7h10v10`, key: `1tivn9` }],
-  [`path`, { d: `M7 17 17 7`, key: `1vkiza` }],
-]),
+    [`path`, { d: `M7 7h10v10`, key: `1tivn9` }],
+    [`path`, { d: `M7 17 17 7`, key: `1vkiza` }],
+  ]),
   F = y(`chevron-down`, [[`path`, { d: `m6 9 6 6 6-6`, key: `qrunsl` }]]),
   I = y(`circle-check`, [
     [`circle`, { cx: `12`, cy: `12`, r: `10`, key: `1mglay` }],
@@ -534,78 +534,78 @@ function re() {
   return e.length === 0
     ? null
     : (0, K.jsx)(`div`, {
-      className: `grid gap-6 sm:grid-cols-2 lg:grid-cols-3`,
-      children: e.map((e, t) =>
-        (0, K.jsx)(
-          A,
-          {
-            delay: t * 80,
-            children: (0, K.jsxs)(M, {
-              className: `glass lift group flex h-full flex-col overflow-hidden rounded-2xl`,
-              children: [
-                (0, K.jsxs)(`div`, {
-                  className: `relative h-48 overflow-hidden`,
-                  children: [
-                    (0, K.jsx)(`img`, {
-                      src: e.cover,
-                      alt: e.title,
-                      className: `size-full object-cover transition-transform duration-500 group-hover:scale-105`,
-                      loading: `lazy`,
-                    }),
-                    (0, K.jsx)(`div`, {
-                      className: `absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent`,
-                    }),
-                    (0, K.jsx)(`span`, {
-                      className: `absolute left-4 top-4 rounded-full border border-primary/40 bg-card/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary-glow backdrop-blur-sm`,
-                      children: e.category,
-                    }),
-                  ],
-                }),
-                (0, K.jsxs)(`div`, {
-                  className: `flex flex-1 flex-col justify-between p-6`,
-                  children: [
-                    (0, K.jsxs)(`div`, {
-                      children: [
-                        (0, K.jsx)(`h3`, {
-                          className: `font-display text-lg font-bold leading-snug text-foreground transition-colors group-hover:text-primary-glow`,
-                          children: e.title,
-                        }),
-                        (0, K.jsx)(`p`, {
-                          className: `mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-2`,
-                          children: e.summary,
-                        }),
-                      ],
-                    }),
-                    (0, K.jsxs)(`div`, {
-                      className: `mt-5 flex items-center justify-between gap-3 border-t border-border/50 pt-4`,
-                      children: [
-                        (0, K.jsxs)(`div`, {
-                          className: `flex items-center gap-2 font-mono text-[11px] text-muted-foreground`,
-                          children: [
-                            (0, K.jsx)(p, { className: `size-3.5 text-primary-glow` }),
-                            l(e),
-                          ],
-                        }),
-                        e.attendees &&
-                        (0, K.jsxs)(`div`, {
-                          className: `flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground`,
-                          children: [
-                            (0, K.jsx)(g, { className: `size-3.5` }),
-                            e.attendees,
-                            `+`,
-                          ],
-                        }),
-                      ],
-                    }),
-                  ],
-                }),
-              ],
-            }),
-          },
-          e.slug,
+        className: `grid gap-6 sm:grid-cols-2 lg:grid-cols-3`,
+        children: e.map((e, t) =>
+          (0, K.jsx)(
+            A,
+            {
+              delay: t * 80,
+              children: (0, K.jsxs)(M, {
+                className: `glass lift group flex h-full flex-col overflow-hidden rounded-2xl`,
+                children: [
+                  (0, K.jsxs)(`div`, {
+                    className: `relative h-48 overflow-hidden`,
+                    children: [
+                      (0, K.jsx)(`img`, {
+                        src: e.cover,
+                        alt: e.title,
+                        className: `size-full object-cover transition-transform duration-500 group-hover:scale-105`,
+                        loading: `lazy`,
+                      }),
+                      (0, K.jsx)(`div`, {
+                        className: `absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent`,
+                      }),
+                      (0, K.jsx)(`span`, {
+                        className: `absolute left-4 top-4 rounded-full border border-primary/40 bg-card/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary-glow backdrop-blur-sm`,
+                        children: e.category,
+                      }),
+                    ],
+                  }),
+                  (0, K.jsxs)(`div`, {
+                    className: `flex flex-1 flex-col justify-between p-6`,
+                    children: [
+                      (0, K.jsxs)(`div`, {
+                        children: [
+                          (0, K.jsx)(`h3`, {
+                            className: `font-display text-lg font-bold leading-snug text-foreground transition-colors group-hover:text-primary-glow`,
+                            children: e.title,
+                          }),
+                          (0, K.jsx)(`p`, {
+                            className: `mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-2`,
+                            children: e.summary,
+                          }),
+                        ],
+                      }),
+                      (0, K.jsxs)(`div`, {
+                        className: `mt-5 flex items-center justify-between gap-3 border-t border-border/50 pt-4`,
+                        children: [
+                          (0, K.jsxs)(`div`, {
+                            className: `flex items-center gap-2 font-mono text-[11px] text-muted-foreground`,
+                            children: [
+                              (0, K.jsx)(p, { className: `size-3.5 text-primary-glow` }),
+                              l(e),
+                            ],
+                          }),
+                          e.attendees &&
+                            (0, K.jsxs)(`div`, {
+                              className: `flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground`,
+                              children: [
+                                (0, K.jsx)(g, { className: `size-3.5` }),
+                                e.attendees,
+                                `+`,
+                              ],
+                            }),
+                        ],
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+            },
+            e.slug,
+          ),
         ),
-      ),
-    });
+      });
 }
 function ie({ children: e }) {
   let { theme: t } = v(),
@@ -1252,9 +1252,9 @@ function se() {
                             children: e.year.slice(-2),
                           }),
                           t < C.length - 1 &&
-                          (0, K.jsx)(`div`, {
-                            className: `mt-2 w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-transparent`,
-                          }),
+                            (0, K.jsx)(`div`, {
+                              className: `mt-2 w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-transparent`,
+                            }),
                         ],
                       }),
                       (0, K.jsxs)(`div`, {

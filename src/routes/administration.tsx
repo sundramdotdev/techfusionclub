@@ -1745,7 +1745,10 @@ function TrashAdmin() {
                 const msLeft = item.expiresAt - Date.now();
                 const hoursLeft = Math.max(0, Math.floor(msLeft / (1000 * 60 * 60)));
                 const itemLabel = String(
-                  item.data?.["title"] || item.data?.["name"] || item.data?.["headline"] || item.originalId
+                  item.data?.["title"] ||
+                    item.data?.["name"] ||
+                    item.data?.["headline"] ||
+                    item.originalId,
                 );
 
                 return (
