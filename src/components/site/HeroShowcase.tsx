@@ -81,7 +81,7 @@ export function HeroShowcase() {
             </div>
 
             <a
-              href="https://viveka.techfusion.club"
+              href="https://vivekatheintelligence.in/"
               target="_blank"
               rel="noopener noreferrer"
               className="group/btn inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 font-mono text-xs font-bold text-primary-foreground shadow-lg transition-transform duration-300 hover:scale-105 shrink-0"

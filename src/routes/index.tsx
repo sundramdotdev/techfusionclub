@@ -209,7 +209,7 @@ function Home() {
                   Event details <ArrowRight className="size-4" />
                 </Link>
                 <a
-                  href="https://viveka.techfusion.club"
+                  href="https://vivekatheintelligence.in/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="glass inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"

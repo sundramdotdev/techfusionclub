@@ -12,7 +12,7 @@ export const club = {
   foundedYear: 2019,
   email: "techfusionclub@srmu.ac.in",
   coordinatorEmail: "techfusionclub@srmu.ac.in",
-  registrationFormUrl: "https://viveka.techfusion.club",
+  registrationFormUrl: "https://vivekatheintelligence.in/",
   /**
    * Paste a Formspree form ID here (e.g. "xabcdefg") to make the Join form
    * send real email. Until then the form validates and shows a success state

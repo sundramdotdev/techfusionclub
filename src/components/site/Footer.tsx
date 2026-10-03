@@ -3,13 +3,13 @@ import { Mail, ExternalLink } from "lucide-react";
 import { club } from "@/data/club";
 import { Logo } from "./Logo";
 
-type FooterLink = { to: any; label: string } | { href: string; label: string; external: true };
+type FooterLink = { to: string; label: string } | { href: string; label: string; external: true };
 
 const quickLinks: FooterLink[] = [
   { to: "/about", label: "About" },
   { to: "/members", label: "Members" },
   { to: "/events", label: "Events" },
-  { href: "https://viveka.techfusion.club", label: "Viveka 6.0 Fest", external: true },
+  { href: "https://vivekatheintelligence.in/", label: "Viveka 6.0 Fest", external: true },
 ];
 
 const moreLinks: FooterLink[] = [

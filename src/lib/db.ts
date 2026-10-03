@@ -96,7 +96,7 @@ export interface TrashItem {
   originalId: string;
   deletedAt: number;
   expiresAt: number;
-  data: any;
+  data: Record<string, unknown>;
 }
 
 export const getTrashItems = async (): Promise<TrashItem[]> => {

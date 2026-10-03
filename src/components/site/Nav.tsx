@@ -4,7 +4,7 @@ import { Menu, X, Sun, Moon, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 
-type NavLink = { to: any; label: string } | { href: string; label: string; external: true };
+type NavLink = { to: string; label: string } | { href: string; label: string; external: true };
 
 const links: NavLink[] = [
   { to: "/", label: "Home" },
