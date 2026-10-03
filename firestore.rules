@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Function to check if the user is an admin
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == "webdevpraveen@gmail.com" || 
+        request.auth.token.email == "techfusionclub@srmu.ac.in"
+      );
+    }
+
+    // Events collection
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Members collection
+    match /members/{memberId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Alumni collection
+    match /alumni/{alumnusId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Gallery collection
+    match /gallery/{photoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Announcements collection
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Registrations collection
+    match /registrations/{registrationId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Trash collection
+    match /trash/{trashId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
